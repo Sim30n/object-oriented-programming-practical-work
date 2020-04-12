@@ -4,11 +4,4 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_red_light">
 
-    <ListView
-            android:layout_below="@+id/eka"
-            android:id="@+id/lista"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
 </RelativeLayout>

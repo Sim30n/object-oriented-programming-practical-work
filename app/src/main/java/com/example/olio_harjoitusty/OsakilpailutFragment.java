@@ -20,19 +20,6 @@ public class OsakilpailutFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_osakilpailut, container, false);
-        list = (ListView) v.findViewById(R.id.lista);
-        ArrayList<String> names = new ArrayList<>();
-        /*for(int i = 0; i<firebase.ajat.size(); i++){
-            System.out.println(i);
-        }*/
-        names.add("1. Petteri                                                   0.43.21");
-        names.add("2. fdfdsfds                                                  0.43.21");
-        names.add("3. Petteri                                                   0.43.21");
-        names.add("4. Petteri                                                   0.43.21");
-        names.add("5. Petteri                                                   0.43.21");
-        ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, names);
-        list.setAdapter(namesAdapter);
         return v;
     }
 }

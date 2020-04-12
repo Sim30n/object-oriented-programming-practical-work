@@ -48,6 +48,11 @@ public class TuloksetFragment extends Fragment {
                 transaction.commit();
             }
         });
+
+
+
+
+
         return v;
     }
 }

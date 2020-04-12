@@ -9,13 +9,20 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("imatra", "aika-ajot");
-        //Firebase firebase = new Firebase();
-        //firebase.getLapTimes("petteri");
+        FirebaseGetCircuits firebaseGetCircuits = new FirebaseGetCircuits();
+        firebaseGetCircuits.getCircuits(new FirebaseGetCircuits.MyCallback() {
+            @Override
+            public void onCallback(ArrayList<String> osakilpailut) {
+                System.out.println("@@@@@@@@@@");
+            }
+        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
