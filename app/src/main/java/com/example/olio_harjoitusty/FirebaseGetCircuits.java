@@ -33,7 +33,7 @@ public class FirebaseGetCircuits {
                 if(task.isSuccessful()){
                     ArrayList<String> osakilpailut = new ArrayList<String>();
                     for (QueryDocumentSnapshot document : task.getResult()){
-                        System.out.println(document.getId());
+                        //System.out.println(document.getId());
                         osakilpailut.add(document.getId());
                     }
                     myCallback.onCallback(osakilpailut);

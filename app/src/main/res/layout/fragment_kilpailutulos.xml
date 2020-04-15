@@ -2,12 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_purple">
+    android:background="@color/silver">
+
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AIKA-AJOT"
+        android:textSize="25dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:paddingTop="6dp"/>
 
     <ListView
-            android:id="@+id/lista"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/time"/>
+
+    <!--<TextView
+        android:id="@+id/kisa"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text="KILPAILU"
+        android:textSize="25dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_below="@+id/lista"/>
+
+    <ListView
+        android:id="@+id/lista-kisa"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/kisa"/>-->
 
 </RelativeLayout>

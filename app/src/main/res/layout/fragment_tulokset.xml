@@ -1,66 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/silver">
 
-    <RelativeLayout
+    <TextView
+    android:id="@+id/time"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="PISTETILANNE"
+    android:textSize="25dp"
+    android:textColor="@color/black"
+    android:gravity="center"
+    android:paddingTop="6dp"/>
+
+    <ListView
+        android:id="@+id/piste_lista"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/time"/>
 
-        <Button
-            android:id="@+id/eka"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Imatra"/>
-
-        <!--<ListView
-            android:layout_below="@+id/eka"
-            android:id="@+id/lista"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />-->
-
-        <Button
-            android:layout_below="@+id/eka"
-            android:id="@+id/toka"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Vantaa"/>
-        <Button
-            android:layout_below="@+id/toka"
-            android:id="@+id/kolmas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Lahti"/>
-        <Button
-            android:layout_below="@+id/kolmas"
-            android:id="@+id/neljäs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="4.Osakilpailu"/>
-        <Button
-            android:layout_below="@+id/neljäs"
-            android:id="@+id/viides"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="5.Osakilpailu"/>
-        <Button
-            android:layout_below="@+id/viides"
-            android:id="@+id/kuudes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="6.Osakilpaliu"/>
-
-    </RelativeLayout>
-
-
-
-
-</ScrollView>
+</RelativeLayout>

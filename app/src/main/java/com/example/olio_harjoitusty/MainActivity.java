@@ -12,17 +12,55 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    Integer tarkistus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("imatra", "aika-ajot");
-        FirebaseGetCircuits firebaseGetCircuits = new FirebaseGetCircuits();
+        /*FirebaseGetCircuits firebaseGetCircuits = new FirebaseGetCircuits();
+        tarkistus = 0;
         firebaseGetCircuits.getCircuits(new FirebaseGetCircuits.MyCallback() {
             @Override
-            public void onCallback(ArrayList<String> osakilpailut) {
-                System.out.println("@@@@@@@@@@");
+            public void onCallback(final ArrayList<String> osakilpailut) {
+                FirebaseGetDriverNames firebaseGetDriverNames = new FirebaseGetDriverNames();
+                firebaseGetDriverNames.getNames(new FirebaseGetDriverNames.NamesCallback() {
+                    @Override
+                    public void onCallback(ArrayList<String> nimet) {
+                        tarkistus++;
+                        *//*if(tarkistus == osakilpailut.size()){
+                            System.out.println(nimet);
+                        }*//*
+                        System.out.println(nimet);
+
+                        for(int i = 0; i<nimet.size(); i++){
+
+                        }
+                    }
+                });
+            }
+        });*/
+
+        firebaseGetDriver.getDrivers(new FirebaseGetDriver.MyCallback() {
+            @Override
+            public void onCallback(ArrayList<Kilpailija> kuljettajat) {
+                System.out.println("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
+
             }
         });
+
+        //firebaseGetDriver.addData();
+
+
+        /*FirebaseGetPoints firebaseGetPoints = new FirebaseGetPoints();
+        firebaseGetPoints.getPoints(new FirebaseGetPoints.PointsCallback() {
+            @Override
+            public void onCallback(ArrayList<Object> pisteet) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA");
+            }
+        });*/
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

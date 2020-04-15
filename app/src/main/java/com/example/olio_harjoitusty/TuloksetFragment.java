@@ -15,44 +15,43 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TuloksetFragment extends Fragment {
+    Integer tarkistus;
+
     ListView list;
-    Button button;
-    Button button2;
+    ArrayList<String> pisteetArr = new ArrayList<String>();
+    FirebaseGetPoints firebaseGetPoints = new FirebaseGetPoints();
+    ArrayAdapter<String> pisteAdapter;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tulokset, container, false);
-        button = v.findViewById(R.id.eka);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment tulos = new KilpailuTulosFragment("imatra", "aika-ajot");
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-            }
-        });
-
-        button2 = v.findViewById(R.id.toka);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment tulos = new KilpailuTulosFragment("imatra", "aika-ajot");
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-            }
-        });
-
-
-
-
-
+        list = (ListView) v.findViewById(R.id.piste_lista);
+        pisteAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, pisteetArr);
+        list.setAdapter(pisteAdapter);
+        addPoints();
         return v;
+    }
+
+    public void addPoints(){
+        /*firebaseGetPoints.getPoints(new FirebaseGetPoints.PointsCallback() {
+            @Override
+            public void onCallback(ArrayList<Pisteet> pisteet) {
+                System.out.println(pisteet.get(0).summa());
+                for (int i = 0; i < pisteet.size(); i++) {
+                    System.out.println("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
+                    String nimi = pisteet.get(i).getNimi();
+                    Integer summa = pisteet.get(i).summa();
+                    pisteetArr.add(nimi + " " + summa);
+                }
+                pisteAdapter.notifyDataSetChanged();
+            }
+        });*/
+
     }
 }

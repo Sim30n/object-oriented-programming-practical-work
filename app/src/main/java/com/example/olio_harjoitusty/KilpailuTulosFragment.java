@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,9 +27,9 @@ public class KilpailuTulosFragment extends Fragment {
         this.valinta = valinta;
     }
 
-
     ListView list;
     ArrayList<String> jarjestys = new ArrayList<String>();
+    ArrayList<Double> kierrosaika = new ArrayList<Double>();
     ArrayAdapter<String> jarjestysAdapter;
     FirebaseGetDriver firebaseGetDriver;
 
@@ -38,7 +39,19 @@ public class KilpailuTulosFragment extends Fragment {
         firebaseGetDriver = new FirebaseGetDriver(kaupunki, valinta);
         View v = inflater.inflate(R.layout.fragment_kilpailutulos, container, false);
         list = (ListView) v.findViewById(R.id.lista);
-        jarjestysAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, jarjestys);
+        jarjestysAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, jarjestys){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(jarjestys.get(position));
+                text2.setText("      "+kierrosaika.get(position).toString());
+
+                return view;
+            }
+        };
         list.setAdapter(jarjestysAdapter);
         addPositiot();
         return v;
@@ -50,11 +63,13 @@ public class KilpailuTulosFragment extends Fragment {
             public void onCallback(ArrayList<Kilpailija> kuljettajat) {
                 Collections.sort(kuljettajat);
                 for(int i=0; i<kuljettajat.size(); i++){
-                    Integer positio = kuljettajat.get(i).getPositio();
+                    //jarjestys.add(kuljettajat.get(i));
+                    Integer positio = kuljettajat.get(i).getPositio_aika();
                     String nimi = kuljettajat.get(i).getNimi();
                     String cap_nimi = nimi.substring(0, 1).toUpperCase() + nimi.substring(1);
                     Double aika = kuljettajat.get(i).getParasKierrosaika();
-                    jarjestys.add(positio + ". " + cap_nimi + " " + aika);
+                    kierrosaika.add(aika);
+                    jarjestys.add(positio + ".  " + cap_nimi);
                 }
                 jarjestysAdapter.notifyDataSetChanged();
             }
