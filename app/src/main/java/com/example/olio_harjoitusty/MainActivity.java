@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        firebaseGetDriver.getDrivers(new FirebaseGetDriver.MyCallback() {
+        firebaseGetDriver.getDriversByRace(new FirebaseGetDriver.MyCallback() {
             @Override
             public void onCallback(ArrayList<Kilpailija> kuljettajat) {
                 System.out.println("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");

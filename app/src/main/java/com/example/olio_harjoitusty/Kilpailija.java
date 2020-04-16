@@ -65,9 +65,9 @@ public class Kilpailija implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        int comparePos=((Kilpailija)o).getPositio_kisa();
+        int comparePoints=((Kilpailija)o).getPositio_aika();
         /* For Ascending order*/
-        return this.positio_kisa-comparePos;
+        return this.positio_aika-comparePoints;
 
         /* For Descending order do like this */
         //return compareage-this.studentage;

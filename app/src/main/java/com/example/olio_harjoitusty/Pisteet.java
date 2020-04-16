@@ -2,29 +2,32 @@ package com.example.olio_harjoitusty;
 
 import java.util.ArrayList;
 
-public class Pisteet {
+public class Pisteet implements Comparable {
 
-    private String nimi;
-    private int summa;
+    private String name;
+    private int total;
 
-    ArrayList<Integer> pisteet = new ArrayList<Integer>();
-
-    public Pisteet(String nimi){
-        this.nimi = nimi;
+    public Pisteet(String name, int total){
+        this.name = name;
+        this.total = total;
     }
 
     public String getNimi(){
-        return nimi;
+        return name;
     }
 
-    public Integer summa(){
-        for (int i: pisteet) {
-            summa += i;
-        }
-        return summa;
+    public int getTotal(){
+        return total;
     }
 
-    public void addPoint(Integer piste){
-        pisteet.add(piste);
+    @Override
+    public int compareTo(Object o) {
+        int comparePoints=((Pisteet)o).getTotal();
+        /* For Ascending order*/
+        //return this.total-comparePoints;
+
+        /* For Descending order do like this */
+        return comparePoints-this.total;
     }
+
 }

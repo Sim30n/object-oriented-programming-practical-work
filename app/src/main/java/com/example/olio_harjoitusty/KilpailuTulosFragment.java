@@ -58,7 +58,7 @@ public class KilpailuTulosFragment extends Fragment {
     }
 
     public void addPositiot(){
-        firebaseGetDriver.getDrivers(new FirebaseGetDriver.MyCallback() {
+        firebaseGetDriver.getDriversByRace(new FirebaseGetDriver.MyCallback() {
             @Override
             public void onCallback(ArrayList<Kilpailija> kuljettajat) {
                 Collections.sort(kuljettajat);
