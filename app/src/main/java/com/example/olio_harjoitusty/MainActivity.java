@@ -17,28 +17,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("imatra", "aika-ajot");
-        /*FirebaseGetCircuits firebaseGetCircuits = new FirebaseGetCircuits();
-        tarkistus = 0;
-        firebaseGetCircuits.getCircuits(new FirebaseGetCircuits.MyCallback() {
-            @Override
-            public void onCallback(final ArrayList<String> osakilpailut) {
-                FirebaseGetDriverNames firebaseGetDriverNames = new FirebaseGetDriverNames();
-                firebaseGetDriverNames.getNames(new FirebaseGetDriverNames.NamesCallback() {
-                    @Override
-                    public void onCallback(ArrayList<String> nimet) {
-                        tarkistus++;
-                        *//*if(tarkistus == osakilpailut.size()){
-                            System.out.println(nimet);
-                        }*//*
-                        System.out.println(nimet);
-
-                        for(int i = 0; i<nimet.size(); i++){
-
-                        }
-                    }
-                });
-            }
-        });*/
 
         firebaseGetDriver.getDriversByRace(new FirebaseGetDriver.MyCallback() {
             @Override
@@ -47,19 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        //firebaseGetDriver.addData();
-
-
-        /*FirebaseGetPoints firebaseGetPoints = new FirebaseGetPoints();
-        firebaseGetPoints.getPoints(new FirebaseGetPoints.PointsCallback() {
-            @Override
-            public void onCallback(ArrayList<Object> pisteet) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA");
-            }
-        });*/
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

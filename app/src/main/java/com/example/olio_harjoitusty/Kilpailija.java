@@ -3,7 +3,7 @@ package com.example.olio_harjoitusty;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Kilpailija implements Comparable {
+public class Kilpailija {
     public String osakilpailu;
     public int positio_aika;
     public int positio_kisa;
@@ -63,13 +63,13 @@ public class Kilpailija implements Comparable {
         return kierrosajat_aika;
     }
 
-    @Override
+    /*@Override
     public int compareTo(Object o) {
         int comparePoints=((Kilpailija)o).getPositio_aika();
-        /* For Ascending order*/
+        *//* For Ascending order*//*
         return this.positio_aika-comparePoints;
 
-        /* For Descending order do like this */
+        *//* For Descending order do like this *//*
         //return compareage-this.studentage;
-    }
+    }*/
 }

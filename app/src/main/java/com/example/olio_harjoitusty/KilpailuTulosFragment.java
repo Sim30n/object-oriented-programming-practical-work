@@ -29,7 +29,7 @@ public class KilpailuTulosFragment extends Fragment {
 
     ListView list;
     ArrayList<String> jarjestys = new ArrayList<String>();
-    ArrayList<Double> kierrosaika = new ArrayList<Double>();
+    ArrayList<String> kierrosaika = new ArrayList<String>();
     ArrayAdapter<String> jarjestysAdapter;
     FirebaseGetDriver firebaseGetDriver;
 
@@ -38,6 +38,7 @@ public class KilpailuTulosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         firebaseGetDriver = new FirebaseGetDriver(kaupunki, valinta);
         View v = inflater.inflate(R.layout.fragment_kilpailutulos, container, false);
+        //****************************
         list = (ListView) v.findViewById(R.id.lista);
         jarjestysAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, jarjestys){
             @Override
@@ -45,14 +46,13 @@ public class KilpailuTulosFragment extends Fragment {
                 View view = super.getView(position, convertView, parent);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-
                 text1.setText(jarjestys.get(position));
-                text2.setText("      "+kierrosaika.get(position).toString());
-
+                text2.setText(kierrosaika.get(position));
                 return view;
             }
         };
         list.setAdapter(jarjestysAdapter);
+        //******************************
         addPositiot();
         return v;
     }
@@ -61,14 +61,26 @@ public class KilpailuTulosFragment extends Fragment {
         firebaseGetDriver.getDriversByRace(new FirebaseGetDriver.MyCallback() {
             @Override
             public void onCallback(ArrayList<Kilpailija> kuljettajat) {
-                Collections.sort(kuljettajat);
+                Collections.sort(kuljettajat, new Sortbypodium());
+                kierrosaika.add("**************************");
+                jarjestys.add("***** AIKA-AJOT *****");
                 for(int i=0; i<kuljettajat.size(); i++){
-                    //jarjestys.add(kuljettajat.get(i));
                     Integer positio = kuljettajat.get(i).getPositio_aika();
                     String nimi = kuljettajat.get(i).getNimi();
                     String cap_nimi = nimi.substring(0, 1).toUpperCase() + nimi.substring(1);
                     Double aika = kuljettajat.get(i).getParasKierrosaika();
-                    kierrosaika.add(aika);
+                    kierrosaika.add("      "+aika.toString());
+                    jarjestys.add(positio + ".  " + cap_nimi);
+                }
+                Collections.sort(kuljettajat, new Sortbyrace());
+                kierrosaika.add("************************");
+                jarjestys.add("***** KILPAILU *****");
+                for(int i=0; i<kuljettajat.size(); i++){
+                    Integer positio = kuljettajat.get(i).getPositio_kisa();
+                    String nimi = kuljettajat.get(i).getNimi();
+                    String cap_nimi = nimi.substring(0, 1).toUpperCase() + nimi.substring(1);
+                    Double aika = kuljettajat.get(i).getParasKierrosaika();
+                    kierrosaika.add("      "+aika.toString());
                     jarjestys.add(positio + ".  " + cap_nimi);
                 }
                 jarjestysAdapter.notifyDataSetChanged();
