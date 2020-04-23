@@ -36,7 +36,7 @@ public class KilpailuTulosFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        firebaseGetDriver = new FirebaseGetDriver(kaupunki, valinta);
+        firebaseGetDriver = new FirebaseGetDriver(kaupunki, valinta, "kaikki");
         View v = inflater.inflate(R.layout.fragment_kilpailutulos, container, false);
         //****************************
         list = (ListView) v.findViewById(R.id.lista);
@@ -79,7 +79,7 @@ public class KilpailuTulosFragment extends Fragment {
                     Integer positio = kuljettajat.get(i).getPositio_kisa();
                     String nimi = kuljettajat.get(i).getNimi();
                     String cap_nimi = nimi.substring(0, 1).toUpperCase() + nimi.substring(1);
-                    Double aika = kuljettajat.get(i).getParasKierrosaika();
+                    Double aika = kuljettajat.get(i).getBestRacetime();
                     kierrosaika.add("      "+aika.toString());
                     jarjestys.add(positio + ".  " + cap_nimi);
                 }

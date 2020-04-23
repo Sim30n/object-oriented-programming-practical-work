@@ -36,6 +36,8 @@ public class Kilpailija {
         this.pvm = pvm;
     }
 
+    public String getOsakilpailu(){return osakilpailu;}
+
     public int getPositio_kisa(){
         return positio_kisa;
     }
@@ -59,17 +61,15 @@ public class Kilpailija {
         return paras_aika;
     }
 
+    public Double getBestRacetime(){
+        ArrayList<Double> kierrosajat_sorted = kierrosajat_kisa;
+        Collections.sort(kierrosajat_sorted);
+        Double paras_aika = kierrosajat_sorted.get(0);
+        return paras_aika;
+    }
+
     public ArrayList<Double> getKierrosajat_aika(){
         return kierrosajat_aika;
     }
 
-    /*@Override
-    public int compareTo(Object o) {
-        int comparePoints=((Kilpailija)o).getPositio_aika();
-        *//* For Ascending order*//*
-        return this.positio_aika-comparePoints;
-
-        *//* For Descending order do like this *//*
-        //return compareage-this.studentage;
-    }*/
 }

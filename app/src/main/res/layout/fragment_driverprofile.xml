@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silver">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="6dp"
+        android:text="KULJETTAJA PROFIILI"
+        android:textColor="@color/black"
+        android:textSize="25dp" />
+
+    <LinearLayout
+        android:id="@+id/paras_sija"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/black"
+            android:paddingTop="15dp"
+            android:id="@+id/textView6"
+            android:layout_width="39dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Paras sijoitus kilpailussa: " />
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/kisa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/paras_sija"
+        android:id="@+id/paras_sija_aika"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:textColor="@color/black"
+            android:paddingTop="10dp"
+            android:id="@+id/textView"
+            android:layout_width="39dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Paras sijoitus aika-ajoissa:" />
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/aika_sija"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_below="@+id/paras_sija_aika"
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
+
+</LinearLayout>

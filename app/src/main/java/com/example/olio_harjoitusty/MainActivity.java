@@ -3,37 +3,23 @@ package com.example.olio_harjoitusty;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
-    Integer tarkistus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("imatra", "aika-ajot");
-
-        firebaseGetDriver.getDriversByRace(new FirebaseGetDriver.MyCallback() {
-            @Override
-            public void onCallback(ArrayList<Kilpailija> kuljettajat) {
-                System.out.println("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
-
-            }
-        });
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         BottomNavigationView bottomnav = findViewById(R.id.bottom_navigation);
         bottomnav.setOnNavigationItemSelectedListener(navlistener);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new OsakilpailutFragment()).commit();
+
+        FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+        firebaseGetDriver.addData();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navlistener =
