@@ -5,18 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomnav;
     EditText userName;
     EditText passWord;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         bottomnav.setVisibility(View.GONE);
         button = findViewById(R.id.login);
 
-        //FirebaseAuth.getInstance().signOut();
+        FirebaseAuth.getInstance().signOut();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_tulokset:
                             selectedFragment = new TuloksetFragment();
                             break;
+                        case R.id.nav_add_circuit:
+                            selectedFragment = new TuloksetFragment();
+                            break;
+                        case R.id.nav_add_points:
+                            selectedFragment = new TuloksetFragment();
+                            break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
@@ -120,14 +125,20 @@ public class MainActivity extends AppCompatActivity {
             };
 
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
 
+        if (user != null) {
+            String uid = user.getUid();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new OsakilpailutFragment()).commit();
+            System.out.println(uid);
+            if(uid.equals("ju8VUgiCEAXdtXieoDXDgyjnNnr2") != true){
+                hideItem();
+            }
             bottomnav.setVisibility(View.VISIBLE);
             button.setVisibility(View.GONE);
             userName.setVisibility(View.GONE);
             passWord.setVisibility(View.GONE);
+
             System.out.println("LOGIN");
         } else {
             /*getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -159,6 +170,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         // [END sign_in_with_email]
+    }
+
+    private void hideItem() {
+        Menu nav_Menu = bottomnav.getMenu();
+        nav_Menu.findItem(R.id.nav_add_circuit).setVisible(false);
+        nav_Menu.findItem(R.id.nav_add_points).setVisible(false);
     }
 
 }

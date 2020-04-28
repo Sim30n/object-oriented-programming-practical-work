@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
     <item
         android:id="@+id/nav_osakilpailut"
         android:icon="@drawable/ic_racing_events"
@@ -13,5 +11,13 @@
     <item
         android:id="@+id/nav_tulokset"
         android:icon="@drawable/ic_race_results"
-        android:title="Tulokset"/>
+        android:title="Pistetilanne"/>
+    <item
+        android:id="@+id/nav_add_circuit"
+        android:icon="@drawable/ic_event_note_black_24dp"
+        android:title="Lisää Osakilpailu"/>
+    <item
+        android:id="@+id/nav_add_points"
+        android:icon="@drawable/ic_add_box_black_24dp"
+        android:title="Lisää tulos"/>
 </menu>
