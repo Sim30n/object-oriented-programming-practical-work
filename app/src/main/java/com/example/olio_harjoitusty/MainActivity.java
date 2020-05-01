@@ -89,11 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        /*
-        FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
-        firebaseGetDriver.addData();
+        /*FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+        firebaseGetDriver.addData();*/
 
-         */
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navlistener =
@@ -115,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new TuloksetFragment();
                             break;
                         case R.id.nav_add_points:
-                            selectedFragment = new TuloksetFragment();
+                            selectedFragment = new AddPointsFragment();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

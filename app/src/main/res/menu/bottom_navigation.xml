@@ -7,7 +7,7 @@
     <item
         android:id="@+id/nav_kuljettajat"
         android:icon="@drawable/ic_icon_wheel"
-        android:title="Kuljettajat"/>
+        android:title="Profiili"/>
     <item
         android:id="@+id/nav_tulokset"
         android:icon="@drawable/ic_race_results"

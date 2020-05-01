@@ -14,7 +14,7 @@
         android:paddingTop="6dp"
         android:text="IMATRA"
         android:textColor="@color/black"
-        android:textSize="25dp" />
+        android:textSize="25dp"/>
 
     <ListView
         android:id="@+id/lista"

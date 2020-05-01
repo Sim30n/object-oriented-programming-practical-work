@@ -66,15 +66,15 @@ public class DriverProfileFragment extends Fragment {
         firebaseGetDriver.getDriversByName(new FirebaseGetDriver.MyCallback() {
             @Override
             public void onCallback(ArrayList<Kilpailija> kuljettajat) {
-                Integer positio_kisa = 0;
-                Integer positio_aika = 0;
+                Integer positio_kisa = 100;
+                Integer positio_aika = 100;
                 String race = "";
                 String cap_race = "";
                 String headName = kuljettajat.get(0).getNimi();
                 headName = headName.substring(0, 1).toUpperCase() + headName.substring(1);
                 nimiText.setText(headName);
                 for(int i=0; i<kuljettajat.size(); i++){
-                    if (positio_kisa< kuljettajat.get(i).getPositio_kisa()){
+                    if (positio_kisa > kuljettajat.get(i).getPositio_kisa()){
                         positio_kisa = kuljettajat.get(i).getPositio_kisa();
                         race = kuljettajat.get(i).getOsakilpailu();
                         cap_race = race.substring(0, 1).toUpperCase() + race.substring(1);
@@ -82,7 +82,7 @@ public class DriverProfileFragment extends Fragment {
                     kisa.setText(cap_race + ", "+positio_kisa.toString());
                 }
                 for(int i=0; i<kuljettajat.size(); i++){
-                    if (positio_aika< kuljettajat.get(i).getPositio_aika()){
+                    if (positio_aika > kuljettajat.get(i).getPositio_aika()){
                         positio_aika = kuljettajat.get(i).getPositio_aika();
                         race = kuljettajat.get(i).getOsakilpailu();
                         cap_race = race.substring(0, 1).toUpperCase() + race.substring(1);
@@ -111,7 +111,7 @@ public class DriverProfileFragment extends Fragment {
                 description.setText("Kilpailijan sijoitus osakailpailussa");
                 yValues = new ArrayList<Entry>();
                 for(int i = 0; i<kuljettajat.size(); i++){
-                    yValues.add(new Entry(0, kuljettajat.get(i).getPositio_kisa()));
+                    yValues.add(new Entry(i, kuljettajat.get(i).getPositio_kisa()));
                 }
                 LineDataSet set1 = new LineDataSet(yValues, "Sijoitus");
                 set1.setFillAlpha(110);

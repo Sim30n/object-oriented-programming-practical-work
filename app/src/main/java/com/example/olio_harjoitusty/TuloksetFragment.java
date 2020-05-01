@@ -6,10 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,17 +15,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @SuppressWarnings("unchecked")
 public class TuloksetFragment extends Fragment {
-    Integer tarkistus;
 
     ListView list;
     ArrayList<Pisteet> pisteetArr = new ArrayList<Pisteet>();
     ArrayList<String> viewArr = new ArrayList<String>();
-
     ArrayList<String> drivers = new ArrayList<String>();
     FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
     ArrayAdapter<String> pisteAdapter;
@@ -42,6 +36,18 @@ public class TuloksetFragment extends Fragment {
         pisteAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         list.setAdapter(pisteAdapter);
         addPoints();
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = pisteetArr.get(position).getNimi();
+                String low_name = name.toLowerCase();
+                Fragment driverProfile = new DriverProfileFragment(low_name);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, driverProfile ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
         return v;
     }
 
@@ -63,9 +69,9 @@ public class TuloksetFragment extends Fragment {
                             long l = kuljettajat.get(i).getPisteet();
                             int point = (int) l;
                             points_total = points_total + point;
-                            pisteetArr.add(new Pisteet(drivers.get(i), points_total));
                         }
                     }
+                    pisteetArr.add(new Pisteet(drivers.get(i), points_total));
                     points_total = 0;
                 }
                 Collections.sort(pisteetArr);
