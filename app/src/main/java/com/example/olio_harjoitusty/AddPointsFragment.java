@@ -39,7 +39,7 @@ public class AddPointsFragment extends Fragment {
         laptimesA = (EditText) v.findViewById(R.id.lap_times_a);
         laptimesR = (EditText) v.findViewById(R.id.lap_times_k);
         pvm = (EditText) v.findViewById(R.id.pvm);
-        final FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+        final FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
         button = v.findViewById(R.id.addPoints);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

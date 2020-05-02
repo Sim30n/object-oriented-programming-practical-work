@@ -21,7 +21,7 @@ public class AddCircuitFragment extends Fragment {
     ListView circuitList;
     ArrayAdapter<String> circuitAdapter;
     ArrayList<String> viewArr = new ArrayList<String>();
-    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
 
     @Nullable
     @Override
@@ -34,7 +34,12 @@ public class AddCircuitFragment extends Fragment {
         circuitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isDriven(viewArr.get(position));
+                Fragment tulos = new EditCircuitFragment(viewArr.get(position));
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+                //isDriven(viewArr.get(position));
             }
         });
 

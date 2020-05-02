@@ -37,7 +37,8 @@ public class KilpailuTulosFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        firebaseGetDriver = new FirebaseGetDriver(kaupunki, valinta, "kaikki");
+        firebaseGetDriver = new FirebaseGetDriver();
+        firebaseGetDriver.setOsakilpailu(kaupunki);
         View v = inflater.inflate(R.layout.fragment_kilpailutulos, container, false);
         head = v.findViewById(R.id.nameCircuit);
         head.setText(kaupunki);

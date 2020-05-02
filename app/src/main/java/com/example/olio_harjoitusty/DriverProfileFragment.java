@@ -46,7 +46,8 @@ public class DriverProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", nimi);
+        firebaseGetDriver = new FirebaseGetDriver();
+        firebaseGetDriver.setNimi(nimi);
         View v = inflater.inflate(R.layout.fragment_driverprofile, container, false);
         kisa = (TextView) v.findViewById(R.id.kisa);
         sija_aika = (TextView) v.findViewById(R.id.aika_sija);

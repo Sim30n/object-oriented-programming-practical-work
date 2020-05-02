@@ -24,7 +24,7 @@ public class TuloksetFragment extends Fragment {
     ArrayList<Pisteet> pisteetArr = new ArrayList<Pisteet>();
     ArrayList<String> viewArr = new ArrayList<String>();
     ArrayList<String> drivers = new ArrayList<String>();
-    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
     ArrayAdapter<String> pisteAdapter;
 
 

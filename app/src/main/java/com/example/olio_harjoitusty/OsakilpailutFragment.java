@@ -21,7 +21,7 @@ public class OsakilpailutFragment extends Fragment {
     ListView circuitList;
     ArrayAdapter<String> circuitAdapter;
     ArrayList<String> viewArr = new ArrayList<String>();
-    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
 
     @Nullable
     @Override

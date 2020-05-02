@@ -23,10 +23,10 @@ public class FirebaseGetDriver {
     String valinta;
     String nimi;
 
-    public FirebaseGetDriver(String osakilpailu, String valinta, String nimi){
-        this.osakilpailu = osakilpailu;
-        this.valinta = valinta;
-        this.nimi = nimi;
+    public FirebaseGetDriver(){
+        osakilpailu = "";
+        valinta = "";
+        nimi = "";
     }
 
     public interface MyCallback {
@@ -41,6 +41,17 @@ public class FirebaseGetDriver {
         void onCallback(Circuit circuit);
     }
 
+    public void setOsakilpailu(String osakilpailu) {
+        this.osakilpailu = osakilpailu;
+    }
+
+    public void setValinta(String valinta) {
+        this.valinta = valinta;
+    }
+
+    public void setNimi(String nimi) {
+        this.nimi = nimi;
+    }
 
     public void getDriversByRace(final MyCallback myCallback){
         mDocRef.collection("/kausi2020/")
@@ -130,7 +141,7 @@ public class FirebaseGetDriver {
 
     public void getCircuitByName(final MyCallbackCircuitByName myCallbackCircuitByName){
         mDocRef.collection("/osakilpailut2020/")
-                .whereEqualTo("nimi", name)
+                .whereEqualTo("nimi", osakilpailu)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

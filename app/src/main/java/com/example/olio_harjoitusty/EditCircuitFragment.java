@@ -1,6 +1,7 @@
 package com.example.olio_harjoitusty;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class EditCircuitFragment extends Fragment {
     Button updateCircuit;
     ListView edList;
     ArrayList<String> viewArr = new ArrayList<String>();
-    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
+    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
     ArrayAdapter<String> circuitsAdapter;
 
     public EditCircuitFragment(String circuitID) {
@@ -42,16 +43,26 @@ public class EditCircuitFragment extends Fragment {
         edPvm = (EditText) v.findViewById(R.id.edit_pvm);
         edInfo = (EditText) v.findViewById(R.id.edit_info);
         edLisaa = (EditText) v.findViewById(R.id.lisaa_nimi);
-        edList = (ListView) v.findViewById(R.id.circuits_list);
+        edList = (ListView) v.findViewById(R.id.edit_osallistujat);
         circuitsAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         edList.setAdapter(circuitsAdapter);
-        //addCircuits();
-
-        edList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        viewArr.add("asd");
+        firebaseGetDriver.setOsakilpailu(circuitID);
+        firebaseGetDriver.getCircuitByName(new FirebaseGetDriver.MyCallbackCircuitByName() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //isDriven(viewArr.get(position));
+            public void onCallback(Circuit circuit) {
+                System.out.println(circuit.getName());
+                edNimi.setText(circuit.getName());
+                edPvm.setText(circuit.getPvm());
+                edInfo.setText(circuit.getInfo());
+                ArrayList<String> os = new ArrayList<String>();
+                os = circuit.getPartisipants();
+                for(int i = 0; i<os.size(); i++){
+                    viewArr.add(os.get(i));
+                }
+                circuitsAdapter.notifyDataSetChanged();
             }
+
         });
         return v;
     }
