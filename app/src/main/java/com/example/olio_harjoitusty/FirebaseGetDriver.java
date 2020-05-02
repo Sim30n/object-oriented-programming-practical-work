@@ -37,6 +37,10 @@ public class FirebaseGetDriver {
         void onCallback(ArrayList<Circuit> circuits);
     }
 
+    public interface MyCallbackCircuitByName {
+        void onCallback(Circuit circuit);
+    }
+
 
     public void getDriversByRace(final MyCallback myCallback){
         mDocRef.collection("/kausi2020/")
@@ -117,6 +121,26 @@ public class FirebaseGetDriver {
                                 circuits.add(circuit);
                             }
                             myCallbackCircuits.onCallback(circuits);
+                        } else {
+                            System.out.println("Error getting documents: "+ task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getCircuitByName(final MyCallbackCircuitByName myCallbackCircuitByName){
+        mDocRef.collection("/osakilpailut2020/")
+                .whereEqualTo("nimi", name)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Circuit circuit = null;
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                circuit = document.toObject(Circuit.class);
+                            }
+                            myCallbackCircuitByName.onCallback(circuit);
                         } else {
                             System.out.println("Error getting documents: "+ task.getException());
                         }

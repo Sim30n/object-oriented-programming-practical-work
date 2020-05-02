@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 
-public class OsakilpailutFragment extends Fragment {
+public class AddCircuitFragment extends Fragment {
 
     ListView circuitList;
     ArrayAdapter<String> circuitAdapter;
@@ -26,8 +26,8 @@ public class OsakilpailutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_osakilpailut, container, false);
-        circuitList = (ListView) v.findViewById(R.id.circuits_list);
+        View v = inflater.inflate(R.layout.fragment_addcircuit, container, false);
+        circuitList = (ListView) v.findViewById(R.id.add_circuits_list);
         circuitAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         circuitList.setAdapter(circuitAdapter);
         addCircuits();

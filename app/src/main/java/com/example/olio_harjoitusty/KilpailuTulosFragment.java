@@ -32,12 +32,16 @@ public class KilpailuTulosFragment extends Fragment {
     ArrayList<String> kierrosaika = new ArrayList<String>();
     ArrayAdapter<String> jarjestysAdapter;
     FirebaseGetDriver firebaseGetDriver;
+    TextView head;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         firebaseGetDriver = new FirebaseGetDriver(kaupunki, valinta, "kaikki");
         View v = inflater.inflate(R.layout.fragment_kilpailutulos, container, false);
+        head = v.findViewById(R.id.nameCircuit);
+        head.setText(kaupunki);
+
         //****************************
         list = (ListView) v.findViewById(R.id.lista);
         jarjestysAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, jarjestys){

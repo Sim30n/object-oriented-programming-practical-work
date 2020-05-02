@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new TuloksetFragment();
                             break;
                         case R.id.nav_add_circuit:
-                            selectedFragment = new TuloksetFragment();
+                            selectedFragment = new AddCircuitFragment();
                             break;
                         case R.id.nav_add_points:
                             selectedFragment = new AddPointsFragment();
