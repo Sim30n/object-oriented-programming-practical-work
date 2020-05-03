@@ -1,5 +1,7 @@
 package com.example.olio_harjoitusty;
 
+import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -149,7 +151,10 @@ public class FirebaseGetDriver {
                         Circuit circuit = null;
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()){
+                                System.out.println("##########################"+document.getId());
                                 circuit = document.toObject(Circuit.class);
+                                circuit.setI_d(document.getId());
+
                             }
                             myCallbackCircuitByName.onCallback(circuit);
                         } else {
@@ -215,5 +220,17 @@ public class FirebaseGetDriver {
         data1.put("kierrosajat_kisa", times_k);
         data1.put("pvm", pvm);
         kilpailija.document(docname).set(data1);
+    }
+
+    public void addCircuit(boolean isDriven, String info, String name,
+                           ArrayList<String> partisipants, String pvm, String circuitID){
+        CollectionReference circuit = mDocRef.collection("osakilpailut2020");
+        Map<String, Object> data1 = new HashMap<>();
+        data1.put("ajettu", isDriven);
+        data1.put("info", info);
+        data1.put("nimi", name);
+        data1.put("osallistujat", partisipants);
+        data1.put("pvm", pvm);
+        circuit.document(circuitID).set(data1);
     }
 }

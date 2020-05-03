@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class AddCircuitFragment extends Fragment {
@@ -22,12 +24,14 @@ public class AddCircuitFragment extends Fragment {
     ArrayAdapter<String> circuitAdapter;
     ArrayList<String> viewArr = new ArrayList<String>();
     FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
+    Button addNew;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_addcircuit, container, false);
         circuitList = (ListView) v.findViewById(R.id.add_circuits_list);
+        addNew = (Button) v.findViewById(R.id.os_add_new);
         circuitAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         circuitList.setAdapter(circuitAdapter);
         addCircuits();
@@ -40,6 +44,19 @@ public class AddCircuitFragment extends Fragment {
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
                 //isDriven(viewArr.get(position));
+            }
+        });
+        addNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uniqueID = UUID.randomUUID().toString();
+                ArrayList<String> tyhja = new ArrayList<String>();
+                firebaseGetDriver.addCircuit(false, "", "uusi kilpailu", tyhja , "", uniqueID);
+                Fragment tulos = new EditCircuitFragment("uusi osakilpailu");
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
 
@@ -103,6 +120,5 @@ public class AddCircuitFragment extends Fragment {
                 }
             }
         });
-
     }
 }

@@ -9,6 +9,7 @@ public class Circuit {
     public ArrayList<String> osallistujat;
     public String pvm;
     public String info;
+    String i_d;
 
     public Circuit(){
 
@@ -21,6 +22,7 @@ public class Circuit {
         this.nimi = nimi;
         this.osallistujat = osallistujat;
         this.pvm = pvm;
+        i_d = "";
     }
 
     public String getName(){
@@ -35,4 +37,11 @@ public class Circuit {
     public boolean isAjettu(){ return ajettu;}
     public String getInfo() { return info; }
 
+    public void setI_d(String i_d) {
+        this.i_d = i_d;
+    }
+
+    public String getI_d() {
+        return i_d;
+    }
 }
