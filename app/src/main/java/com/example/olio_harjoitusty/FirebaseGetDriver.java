@@ -279,8 +279,8 @@ public class FirebaseGetDriver {
         kilpailija.document(docname).set(data1);
     }
 
-    public void addCircuit(boolean isDriven, String info, String name,
-                           ArrayList<String> partisipants, String pvm, String circuitID){
+    public void addCircuit(boolean isDriven, String info, String name, ArrayList<String> partisipants,
+                           String pvm, String circuitID, ArrayList<String> kommentit){
         CollectionReference circuit = mDocRef.collection("osakilpailut2020");
         Map<String, Object> data1 = new HashMap<>();
         data1.put("ajettu", isDriven);
@@ -288,6 +288,7 @@ public class FirebaseGetDriver {
         data1.put("nimi", name);
         data1.put("osallistujat", partisipants);
         data1.put("pvm", pvm);
+        data1.put("kommentit", kommentit);
         circuit.document(circuitID).set(data1);
     }
 }

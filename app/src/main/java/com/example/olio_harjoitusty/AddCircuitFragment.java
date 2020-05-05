@@ -60,7 +60,8 @@ public class AddCircuitFragment extends Fragment {
                     public void onClick(View v) {
                         String uniqueID = UUID.randomUUID().toString();
                         ArrayList<String> tyhja = new ArrayList<String>();
-                        firebaseGetDriver.addCircuit(false, "", "uusi kilpailu", tyhja , "", uniqueID);
+                        firebaseGetDriver.addCircuit(false, "", "uusi kilpailu", tyhja ,
+                                "", uniqueID, tyhja);
                         Fragment tulos = new EditCircuitFragment("uusi osakilpailu", uniqueID);
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter

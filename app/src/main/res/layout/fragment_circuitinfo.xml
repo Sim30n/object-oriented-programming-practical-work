@@ -1,52 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/circuit_info_layout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/silver">
+    android:background="@color/silver"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/info_head"
+    <LinearLayout
+        android:id="@+id/circuit_info_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="6dp"
-        android:text="otsikko"
-        android:textColor="@color/black"
-        android:textSize="25dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/silver">
+
+        <TextView
+            android:id="@+id/info_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="otsikko"
+            android:textColor="@color/black"
+            android:textSize="25dp"/>
 
 
-    <TextView
-        android:id="@+id/info_pvm"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/info_pvm"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
-    <TextView
-        android:id="@+id/info_info"
-        android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="7dp"
-        android:text="TextView" />
-    <TextView
-        android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="Osallistujat:" />
+        <TextView
+            android:id="@+id/info_info"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="7dp"
+            android:layout_marginBottom="20dp"
+            android:text="TextView" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Osallistujat:" />
 
-    <ListView
-        android:id="@+id/info_list"
-        android:layout_width="match_parent"
-        android:layout_height="330dp" />
-    <TextView
-        android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="Kommentit:" />
-</LinearLayout>
+        <!--<EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"
+            android:text="Kommentti" />-->
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:text="Nimimerkki" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="lisää" />
+        </LinearLayout>-->
+
+        <!--<ListView
+            android:id="@+id/info_list"
+            android:layout_width="match_parent"
+            android:layout_height="330dp" />-->
+        <!--<TextView
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Kommentit:" />-->
+    </LinearLayout>
+</ScrollView>

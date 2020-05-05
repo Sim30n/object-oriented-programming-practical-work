@@ -10,22 +10,25 @@ public class Circuit {
     public String pvm;
     public String info;
     String i_d;
+    ArrayList<String> kommentit = new ArrayList<String>();
 
     public Circuit(){
 
     }
 
 
-    public Circuit(boolean ajettu, String info, String nimi, ArrayList<String> osallistujat, String pvm){
+    public Circuit(boolean ajettu, String info, ArrayList<String> kommentit, String nimi,
+                   ArrayList<String> osallistujat, String pvm){
         this.ajettu = ajettu;
         this.info = info;
         this.nimi = nimi;
         this.osallistujat = osallistujat;
         this.pvm = pvm;
+        this.kommentit = kommentit;
         i_d = "";
     }
 
-
+    public ArrayList<String> getKommentit() { return kommentit; }
     public String getName(){
         return nimi;
     }

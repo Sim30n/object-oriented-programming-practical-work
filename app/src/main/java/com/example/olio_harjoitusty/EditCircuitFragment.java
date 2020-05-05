@@ -35,6 +35,7 @@ public class EditCircuitFragment extends Fragment {
     ListView edList;
     boolean ajettu;
     ArrayList<String> viewArr = new ArrayList<String>();
+    ArrayList<String> kommentit = new ArrayList<String>();
 
     FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
     ArrayAdapter<String> circuitsAdapter;
@@ -79,6 +80,7 @@ public class EditCircuitFragment extends Fragment {
                     edInfo.setText(circuit.getInfo());
                     ArrayList<String> os = new ArrayList<String>();
                     os = circuit.getPartisipants();
+                    kommentit = circuit.getKommentit();
                     for(int i = 0; i<os.size(); i++){
                         viewArr.add(os.get(i));
                     }
@@ -107,7 +109,7 @@ public class EditCircuitFragment extends Fragment {
                 String osInfo = edInfo.getText().toString();
                 String osName = edNimi.getText().toString();
                 String osPvm = edPvm.getText().toString();
-                firebaseGetDriver.addCircuit(ajettu, osInfo, osName, viewArr, osPvm, circuitID);
+                firebaseGetDriver.addCircuit(ajettu, osInfo, osName, viewArr, osPvm, circuitID, kommentit);
                 Fragment newFrag = new AddCircuitFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
