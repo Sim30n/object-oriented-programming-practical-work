@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/circuit_info_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,26 +10,43 @@
         android:id="@+id/info_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:gravity="center"
+        android:paddingTop="6dp"
+        android:text="otsikko"
+        android:textColor="@color/black"
+        android:textSize="25dp"/>
+
 
     <TextView
         android:id="@+id/info_pvm"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/info_info"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="7dp"
         android:text="TextView" />
     <TextView
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:text="Osallistujat:" />
 
     <ListView
         android:id="@+id/info_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="330dp" />
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Kommentit:" />
 </LinearLayout>

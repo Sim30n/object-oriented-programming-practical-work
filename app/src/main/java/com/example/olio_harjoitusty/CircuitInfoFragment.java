@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class CircuitInfoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_circuitinfo, container, false);
+
+        LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.circuit_info_layout);
         os = v.findViewById(R.id.info_list);
         osAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, osViewArr);
         os.setAdapter(osAdapter);
@@ -54,6 +57,17 @@ public class CircuitInfoFragment extends Fragment {
                 osAdapter.notifyDataSetChanged();
             }
         });
+        // Add textview 2
+        TextView textView2 = new TextView(this.getActivity());
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        //layoutParams.gravity = Gravity.RIGHT;
+        layoutParams.setMargins(10, 10, 10, 10); // (left, top, right, bottom)
+        textView2.setLayoutParams(layoutParams);
+        textView2.setText("Kommmentti tulee tähän");
+        //textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        //textView2.setBackgroundColor(0xffffdbdb); // hex color 0xAARRGGBB
+        linearLayout.addView(textView2);
         return v;
     }
 }
