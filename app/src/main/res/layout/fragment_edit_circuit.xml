@@ -118,10 +118,22 @@
             android:text="Lisää osallistuja" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/paivita_kisa"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="päivitä" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/poista_kisa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="poista" />
+
+        <Button
+            android:id="@+id/paivita_kisa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="päivitä" />
+    </LinearLayout>
 
 </LinearLayout>

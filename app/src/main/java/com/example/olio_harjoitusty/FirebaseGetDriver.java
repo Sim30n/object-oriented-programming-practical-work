@@ -1,12 +1,17 @@
 package com.example.olio_harjoitusty;
 
 import android.provider.Settings;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -20,15 +25,18 @@ import java.util.Map;
 public class FirebaseGetDriver {
 
     FirebaseFirestore mDocRef = FirebaseFirestore.getInstance();
+    private static final String TAG = "DocSnippets";
 
     String osakilpailu;
     String valinta;
     String nimi;
+    String circuitID;
 
     public FirebaseGetDriver(){
         osakilpailu = "";
         valinta = "";
         nimi = "";
+        circuitID = "";
     }
 
     public interface MyCallback {
@@ -41,6 +49,14 @@ public class FirebaseGetDriver {
 
     public interface MyCallbackCircuitByName {
         void onCallback(Circuit circuit);
+    }
+
+    public interface MyCallbackCircuitByID {
+        void onCallback(Circuit circuit);
+    }
+
+    public void setCircuitID(String circuitID) {
+        this.circuitID = circuitID;
     }
 
     public void setOsakilpailu(String osakilpailu) {
@@ -131,6 +147,8 @@ public class FirebaseGetDriver {
                             ArrayList<Circuit> circuits = new ArrayList<Circuit>();
                             for (QueryDocumentSnapshot document : task.getResult()){
                                 circuit = document.toObject(Circuit.class);
+                                System.out.println(document.getId()+"#############%%%%%%%%%%%%%%%");
+                                circuit.setI_d(document.getId());
                                 circuits.add(circuit);
                             }
                             myCallbackCircuits.onCallback(circuits);
@@ -160,6 +178,45 @@ public class FirebaseGetDriver {
                         } else {
                             System.out.println("Error getting documents: "+ task.getException());
                         }
+                    }
+                });
+    }
+
+    public void getCircuitByID(final MyCallbackCircuitByID myCallbackCircuitByID){
+        DocumentReference docRef = mDocRef.collection("osakilpailut2020").document(circuitID);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Circuit circuit = null;
+                    if (document.exists()) {
+                        circuit = document.toObject(Circuit.class);
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                    myCallbackCircuitByID.onCallback(circuit);
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
+    public void deleteCircuit(String circuitID){
+        mDocRef.collection("osakilpailut2020").document(circuitID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
                     }
                 });
     }

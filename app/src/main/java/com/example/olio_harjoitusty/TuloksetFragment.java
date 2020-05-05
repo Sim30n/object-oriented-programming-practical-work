@@ -27,6 +27,9 @@ public class TuloksetFragment extends Fragment {
     FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
     ArrayAdapter<String> pisteAdapter;
 
+    ArrayList<ResViewPts> ptsView = new ArrayList<ResViewPts>();
+    ResListPtsAdapter adapter;
+
 
     @Nullable
     @Override
@@ -34,7 +37,8 @@ public class TuloksetFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tulokset, container, false);
         list = (ListView) v.findViewById(R.id.piste_lista);
         pisteAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
-        list.setAdapter(pisteAdapter);
+        adapter = new ResListPtsAdapter(this.getActivity(), R.layout.adapter_points_layout, ptsView);
+        list.setAdapter(adapter);
         addPoints();
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,8 +82,12 @@ public class TuloksetFragment extends Fragment {
                 for(int i = 0; i<pisteetArr.size(); i++){
                     String name = pisteetArr.get(i).getNimi();
                     String cap_name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                    String viewName = Integer.toString(i+1) + ". " + cap_name;
                     viewArr.add((i+1)+". "+cap_name + ": " +pisteetArr.get(i).getTotal());
+                    String pts = Integer.toString(pisteetArr.get(i).getTotal()) + " pts.";
+                    ptsView.add(new ResViewPts(viewName, pts));
                 }
+                adapter.notifyDataSetChanged();
                 pisteAdapter.notifyDataSetChanged();
             }
         });

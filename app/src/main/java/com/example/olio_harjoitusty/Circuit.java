@@ -25,6 +25,7 @@ public class Circuit {
         i_d = "";
     }
 
+
     public String getName(){
         return nimi;
     }
@@ -36,11 +37,9 @@ public class Circuit {
     }
     public boolean isAjettu(){ return ajettu;}
     public String getInfo() { return info; }
-
     public void setI_d(String i_d) {
         this.i_d = i_d;
     }
-
     public String getI_d() {
         return i_d;
     }

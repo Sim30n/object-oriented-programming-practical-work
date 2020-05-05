@@ -33,8 +33,14 @@ public class OsakilpailutFragment extends Fragment {
         addCircuits();
         circuitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isDriven(viewArr.get(position));
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                //isDriven(viewArr.get(position));
+                firebaseGetDriver.getAllCircuits(new FirebaseGetDriver.MyCallbackCircuits() {
+                    @Override
+                    public void onCallback(ArrayList<Circuit> circuits) {
+                        isDriven(circuits.get(position).getName());
+                    }
+                });
             }
         });
 
@@ -72,8 +78,9 @@ public class OsakilpailutFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<Circuit> circuits) {
                 for(int i = 0; i<circuits.size(); i++){
-                    System.out.println(circuits.get(i).getName());
-                    viewArr.add(circuits.get(i).getName());
+                    String name = circuits.get(i).getName();
+                    String cap_name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                    viewArr.add(cap_name);
                 }
                 circuitAdapter.notifyDataSetChanged();
             }
@@ -87,9 +94,15 @@ public class OsakilpailutFragment extends Fragment {
                 for(int i = 0; i<circuits.size(); i++){
                     if(os.equals(circuits.get(i).getName())){
                         if(circuits.get(i).isAjettu()){
-                            Fragment tulos = new KilpailuTulosFragment(circuits.get(i).getName(), "aika-ajot");
+                            Fragment newFrag = new KilpailuTulosFragment(circuits.get(i).getName(), "aika-ajot");
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
+                            transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                            transaction.commit();
+                        } else {
+                            Fragment newFrag = new CircuitInfoFragment(circuits.get(i).getI_d());
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
                             transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                             transaction.commit();
                         }

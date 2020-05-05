@@ -34,6 +34,9 @@ public class KilpailuTulosFragment extends Fragment {
     FirebaseGetDriver firebaseGetDriver;
     TextView head;
 
+    ArrayList<ResView> resultView = new ArrayList<ResView>();
+    ResListAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,10 +44,16 @@ public class KilpailuTulosFragment extends Fragment {
         firebaseGetDriver.setOsakilpailu(kaupunki);
         View v = inflater.inflate(R.layout.fragment_kilpailutulos, container, false);
         head = v.findViewById(R.id.nameCircuit);
-        head.setText(kaupunki);
+        String cap_kaupunki = kaupunki.substring(0, 1).toUpperCase() + kaupunki.substring(1);
+        head.setText(cap_kaupunki);
+
+        list = (ListView) v.findViewById(R.id.lista);
+        adapter = new ResListAdapter(this.getActivity(), R.layout.adapter_result_layout, resultView);
+        list.setAdapter(adapter);
+
 
         //****************************
-        list = (ListView) v.findViewById(R.id.lista);
+        /*list = (ListView) v.findViewById(R.id.lista);
         jarjestysAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, jarjestys){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -56,7 +65,7 @@ public class KilpailuTulosFragment extends Fragment {
                 return view;
             }
         };
-        list.setAdapter(jarjestysAdapter);
+        list.setAdapter(jarjestysAdapter);*/
         //******************************
         addPositiot();
         return v;
@@ -67,28 +76,42 @@ public class KilpailuTulosFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<Kilpailija> kuljettajat) {
                 Collections.sort(kuljettajat, new Sortbypodium());
-                kierrosaika.add("**************************");
-                jarjestys.add("***** AIKA-AJOT *****");
+                //kierrosaika.add("**************************");
+                //jarjestys.add("***** AIKA-AJOT *****");
+                resultView.add(new ResView("", "AIKA-AJOT:", ""));
                 for(int i=0; i<kuljettajat.size(); i++){
                     Integer positio = kuljettajat.get(i).getPositio_aika();
                     String nimi = kuljettajat.get(i).getNimi();
                     String cap_nimi = nimi.substring(0, 1).toUpperCase() + nimi.substring(1);
+                    String viewNimi = positio+". " +cap_nimi;
                     Double aika = kuljettajat.get(i).getParasKierrosaika();
-                    kierrosaika.add("      "+aika.toString());
-                    jarjestys.add(positio + ".  " + cap_nimi);
+                    String aika_str = "    " + Double.toString(aika);
+                    Long pts = kuljettajat.get(i).getPisteet();
+                    String pts_str = Long.toString(pts);
+                    //kierrosaika.add("      "+aika.toString());
+                    //jarjestys.add(positio + ".  " + cap_nimi);
+                    resultView.add(new ResView(viewNimi, aika_str, ""));
                 }
                 Collections.sort(kuljettajat, new Sortbyrace());
-                kierrosaika.add("************************");
-                jarjestys.add("***** KILPAILU *****");
+                //kierrosaika.add("************************");
+                //jarjestys.add("***** KILPAILU *****");
+                resultView.add(new ResView("", "KILPAILU:", ""));
                 for(int i=0; i<kuljettajat.size(); i++){
                     Integer positio = kuljettajat.get(i).getPositio_kisa();
                     String nimi = kuljettajat.get(i).getNimi();
                     String cap_nimi = nimi.substring(0, 1).toUpperCase() + nimi.substring(1);
                     Double aika = kuljettajat.get(i).getBestRacetime();
-                    kierrosaika.add("      "+aika.toString());
-                    jarjestys.add(positio + ".  " + cap_nimi);
+                    String aika_str = "    " + Double.toString(aika);
+                    Long pts = kuljettajat.get(i).getPisteet();
+                    String pts_str = Long.toString(pts) + " pts.";
+                    String viewNimi = positio+". " +cap_nimi;
+                    //kierrosaika.add("      "+aika.toString());
+                    //jarjestys.add(positio + ".  " + cap_nimi);
+                    resultView.add(new ResView(viewNimi, aika_str, pts_str));
                 }
-                jarjestysAdapter.notifyDataSetChanged();
+                //jarjestysAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
+
             }
         });
     }

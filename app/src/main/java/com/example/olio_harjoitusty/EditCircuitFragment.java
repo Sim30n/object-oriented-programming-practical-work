@@ -16,6 +16,7 @@ import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -30,14 +31,21 @@ public class EditCircuitFragment extends Fragment {
     Switch isDriven;
     Button addNimi;
     Button updateCircuit;
+    Button delCircuit;
     ListView edList;
     boolean ajettu;
     ArrayList<String> viewArr = new ArrayList<String>();
+
     FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
     ArrayAdapter<String> circuitsAdapter;
 
-    public EditCircuitFragment(String circuitName) {
+    public EditCircuitFragment(String circuitName, String circuitID) {
+        this.circuitID = circuitID;
         this.circuitName = circuitName;
+    }
+
+    public void setCircuitID(String circuitID) {
+        this.circuitID = circuitID;
     }
 
     @Nullable
@@ -52,25 +60,31 @@ public class EditCircuitFragment extends Fragment {
         isDriven = (Switch) v.findViewById(R.id.switch2);
         addNimi = (Button) v.findViewById(R.id.lisaa_os);
         updateCircuit = (Button) v.findViewById(R.id.paivita_kisa);
+        delCircuit = (Button) v.findViewById(R.id.poista_kisa);
         circuitsAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         edList.setAdapter(circuitsAdapter);
         viewArr.add("asd");
         firebaseGetDriver.setOsakilpailu(circuitName);
-        firebaseGetDriver.getCircuitByName(new FirebaseGetDriver.MyCallbackCircuitByName() {
+        firebaseGetDriver.setCircuitID(circuitID);
+        System.out.println("########################"+circuitID);
+        firebaseGetDriver.getCircuitByID(new FirebaseGetDriver.MyCallbackCircuitByID() {
             @Override
             public void onCallback(Circuit circuit) {
-                circuitID = circuit.getI_d();
-                //circuitID = "1111";
-                System.out.println(circuit.getName());
-                edNimi.setText(circuit.getName());
-                edPvm.setText(circuit.getPvm());
-                edInfo.setText(circuit.getInfo());
-                ArrayList<String> os = new ArrayList<String>();
-                os = circuit.getPartisipants();
-                for(int i = 0; i<os.size(); i++){
-                    viewArr.add(os.get(i));
+                if(circuit != null){
+                    //circuitID = circuit.getI_d();
+                    //circuitID = "1111";
+                    System.out.println(circuit.getName());
+                    edNimi.setText(circuit.getName());
+                    edPvm.setText(circuit.getPvm());
+                    edInfo.setText(circuit.getInfo());
+                    ArrayList<String> os = new ArrayList<String>();
+                    os = circuit.getPartisipants();
+                    for(int i = 0; i<os.size(); i++){
+                        viewArr.add(os.get(i));
+                    }
+                    circuitsAdapter.notifyDataSetChanged();
                 }
-                circuitsAdapter.notifyDataSetChanged();
+
             }
         });
         isDriven.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -94,6 +108,22 @@ public class EditCircuitFragment extends Fragment {
                 String osName = edNimi.getText().toString();
                 String osPvm = edPvm.getText().toString();
                 firebaseGetDriver.addCircuit(ajettu, osInfo, osName, viewArr, osPvm, circuitID);
+                Fragment newFrag = new AddCircuitFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+        delCircuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseGetDriver.deleteCircuit(circuitID);
+                Fragment newFrag = new AddCircuitFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
         return v;

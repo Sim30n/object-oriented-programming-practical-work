@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 public class AddCircuitFragment extends Fragment {
@@ -24,6 +25,7 @@ public class AddCircuitFragment extends Fragment {
     ArrayAdapter<String> circuitAdapter;
     ArrayList<String> viewArr = new ArrayList<String>();
     FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
+    ArrayList<Circuit> circuitsArr = new ArrayList<Circuit>();
     Button addNew;
 
     @Nullable
@@ -34,31 +36,42 @@ public class AddCircuitFragment extends Fragment {
         addNew = (Button) v.findViewById(R.id.os_add_new);
         circuitAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         circuitList.setAdapter(circuitAdapter);
+        firebaseGetDriver.getAllCircuits(new FirebaseGetDriver.MyCallbackCircuits() {
+            @Override
+            public void onCallback(final ArrayList<Circuit> circuits) {
+                for(int i = 0; i<circuits.size(); i++){
+                    viewArr.add(circuits.get(i).getName());
+                }
+                circuitAdapter.notifyDataSetChanged();
+                circuitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //System.out.println(circuitsArr.get(position).getI_d());
+                        Fragment tulos = new EditCircuitFragment(viewArr.get(position), circuits.get(position).getI_d());
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();
+                        //isDriven(viewArr.get(position));
+                    }
+                });
+                addNew.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String uniqueID = UUID.randomUUID().toString();
+                        ArrayList<String> tyhja = new ArrayList<String>();
+                        firebaseGetDriver.addCircuit(false, "", "uusi kilpailu", tyhja , "", uniqueID);
+                        Fragment tulos = new EditCircuitFragment("uusi osakilpailu", uniqueID);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();
+                    }
+                });
+            }
+        });
         addCircuits();
-        circuitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment tulos = new EditCircuitFragment(viewArr.get(position));
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-                //isDriven(viewArr.get(position));
-            }
-        });
-        addNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String uniqueID = UUID.randomUUID().toString();
-                ArrayList<String> tyhja = new ArrayList<String>();
-                firebaseGetDriver.addCircuit(false, "", "uusi kilpailu", tyhja , "", uniqueID);
-                Fragment tulos = new EditCircuitFragment("uusi osakilpailu");
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-            }
-        });
+
 
 
 
@@ -90,16 +103,7 @@ public class AddCircuitFragment extends Fragment {
     }
 
     public void addCircuits(){
-        firebaseGetDriver.getAllCircuits(new FirebaseGetDriver.MyCallbackCircuits() {
-            @Override
-            public void onCallback(ArrayList<Circuit> circuits) {
-                for(int i = 0; i<circuits.size(); i++){
-                    System.out.println(circuits.get(i).getName());
-                    viewArr.add(circuits.get(i).getName());
-                }
-                circuitAdapter.notifyDataSetChanged();
-            }
-        });
+
     }
 
     public void isDriven(final String os){
