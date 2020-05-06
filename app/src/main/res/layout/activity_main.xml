@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/silver"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -30,11 +31,26 @@
             android:inputType="textPassword"
             android:text="12goija032pjäreghjk034" />
 
-        <Button
-            android:id="@+id/login"
-            android:layout_width="200dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="login" />
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp">
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kirjaudu sisään"
+                android:layout_marginRight="5dp"/>
+
+            <Button
+                android:id="@+id/new_usr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="uusi käyttäjä" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

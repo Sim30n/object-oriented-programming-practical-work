@@ -64,10 +64,8 @@ public class EditCircuitFragment extends Fragment {
         delCircuit = (Button) v.findViewById(R.id.poista_kisa);
         circuitsAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         edList.setAdapter(circuitsAdapter);
-        viewArr.add("asd");
         firebaseGetDriver.setOsakilpailu(circuitName);
         firebaseGetDriver.setCircuitID(circuitID);
-        System.out.println("########################"+circuitID);
         firebaseGetDriver.getCircuitByID(new FirebaseGetDriver.MyCallbackCircuitByID() {
             @Override
             public void onCallback(Circuit circuit) {
@@ -87,6 +85,15 @@ public class EditCircuitFragment extends Fragment {
                     circuitsAdapter.notifyDataSetChanged();
                 }
 
+            }
+        });
+        edList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //firebaseGetDriver.deletePartisipant(circuitID, viewArr.get(position));
+                viewArr.remove(position);
+                circuitsAdapter.notifyDataSetChanged();
+                //System.out.println(viewArr.get(position));
             }
         });
         isDriven.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

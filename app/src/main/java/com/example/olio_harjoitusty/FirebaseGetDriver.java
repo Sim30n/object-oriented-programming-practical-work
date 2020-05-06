@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -290,5 +291,18 @@ public class FirebaseGetDriver {
         data1.put("pvm", pvm);
         data1.put("kommentit", kommentit);
         circuit.document(circuitID).set(data1);
+    }
+
+    public void addComment(String circuitId, String comment){
+        DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
+                .document(circuitId);
+        kommentti.update("kommentit", FieldValue.arrayUnion(comment));
+    }
+
+    public void deletePartisipant(String circuitID, String osa){
+        DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
+                .document(circuitID);
+        kommentti.update("osallistujat", FieldValue.arrayRemove(osa));
+
     }
 }

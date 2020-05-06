@@ -15,6 +15,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -109,6 +110,17 @@ public class CircuitInfoFragment extends Fragment {
                 Button lisaaButton = new Button(getActivity());
                 lisaaButton.setText("lisää kommentti");
                 linearLayout.addView(lisaaButton);
+                lisaaButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment newFrag = new AddComment(circuitID);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();
+
+                    }
+                });
                 //osAdapter.notifyDataSetChanged();
             }
         });

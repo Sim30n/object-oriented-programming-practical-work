@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     Button button;
+    Button newUser;
     BottomNavigationView bottomnav;
     EditText userName;
     EditText passWord;
@@ -42,12 +43,19 @@ public class MainActivity extends AppCompatActivity {
         bottomnav.setOnNavigationItemSelectedListener(navlistener);
         bottomnav.setVisibility(View.GONE);
         button = findViewById(R.id.login);
+        newUser = findViewById(R.id.new_usr);
 
         //FirebaseAuth.getInstance().signOut();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn(userName.getText().toString(), passWord.getText().toString());
+            }
+        });
+        newUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Uusi käyttäjä");
             }
         });
 
@@ -134,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
             bottomnav.setVisibility(View.VISIBLE);
             button.setVisibility(View.GONE);
+            newUser.setVisibility(View.GONE);
             userName.setVisibility(View.GONE);
             passWord.setVisibility(View.GONE);
 
