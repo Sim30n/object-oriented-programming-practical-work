@@ -299,6 +299,12 @@ public class FirebaseGetDriver {
         kommentti.update("kommentit", FieldValue.arrayUnion(comment));
     }
 
+    public void addPartisipant(String circuitId, String partisipant){
+        DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
+                .document(circuitId);
+        kommentti.update("osallistujat", FieldValue.arrayUnion(partisipant));
+    }
+
     public void deletePartisipant(String circuitID, String osa){
         DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
                 .document(circuitID);

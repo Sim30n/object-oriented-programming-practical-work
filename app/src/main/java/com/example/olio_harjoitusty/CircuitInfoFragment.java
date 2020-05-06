@@ -1,5 +1,6 @@
 package com.example.olio_harjoitusty;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 
@@ -31,6 +35,7 @@ public class CircuitInfoFragment extends Fragment {
     TextView pvm;
     ListView os;
     String circuitID;
+    String usrName;
 
     public CircuitInfoFragment(String circuitID) {
         this.circuitID = circuitID;
@@ -40,7 +45,11 @@ public class CircuitInfoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_circuitinfo, container, false);
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            usrName = user.getDisplayName();
+        }
+        System.out.println(usrName);
 
         //os = v.findViewById(R.id.info_list);
         //osAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, osViewArr);
@@ -118,7 +127,28 @@ public class CircuitInfoFragment extends Fragment {
                         transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
                         transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                         transaction.commit();
+                    }
+                });
+                Button enrollInButton = new Button(getActivity());
+                enrollInButton.setText("ilmoittaudu mukaan (sitova)");
+                linearLayout.addView(enrollInButton);
+                enrollInButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        firebaseGetDriver.addPartisipant(circuitID, usrName);
+                        Fragment newFrag = new CircuitInfoFragment(circuitID);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();
 
+                        // Reload current fragment
+                        /*
+                        Fragment newFrag = new AddComment(circuitID);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();*/
                     }
                 });
                 //osAdapter.notifyDataSetChanged();
