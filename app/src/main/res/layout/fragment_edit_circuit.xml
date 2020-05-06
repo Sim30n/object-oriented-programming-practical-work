@@ -22,6 +22,7 @@
 
         <TextView
             android:id="@+id/textView2"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/black"
             android:text="Päivämäärä" />
 
         <EditText
@@ -63,6 +65,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -128,6 +131,7 @@
         android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="Osallistujat:" />
 
     <ListView

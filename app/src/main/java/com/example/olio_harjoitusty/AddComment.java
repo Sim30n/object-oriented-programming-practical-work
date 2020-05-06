@@ -43,7 +43,7 @@ public class AddComment extends Fragment {
             @Override
             public void onClick(View v) {
                 Date date = Calendar.getInstance().getTime();
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String strDate = dateFormat.format(date);
                 String com = comment.getText().toString();
                 String nic = nick.getText().toString();

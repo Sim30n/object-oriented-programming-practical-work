@@ -30,27 +30,13 @@
             android:ems="10"
             android:inputType="textPassword"
             android:text="12goija032pjäreghjk034" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp">
+            android:text="kirjaudu sisään" />
 
-            <Button
-                android:id="@+id/login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="kirjaudu sisään"
-                android:layout_marginRight="5dp"/>
 
-            <Button
-                android:id="@+id/new_usr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="uusi käyttäjä" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
