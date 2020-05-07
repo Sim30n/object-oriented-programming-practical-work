@@ -10,15 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
         bottomnav.setVisibility(View.GONE);
         button = findViewById(R.id.login);
 
+        /*FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
+        firebaseGetDriver.addDataManual();*/
         //FirebaseAuth.getInstance().signOut();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,47 +54,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        //----------------------------------------------------------------
-        // [START create_user_with_email]
-        /*mAuth.createUserWithEmailAndPassword("user@user.com", "12goija032pjäreghjk034")
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "createUserWithEmail:success");
-                            System.out.println("SUCCESS");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            *//*Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();*//*
-                            updateUI(null);
-                        }
-
-                        // [START_EXCLUDE]
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END create_user_with_email]
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        */
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-
-        //----------------------------------------------------------------
-
-
-
-
-
-        /*FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver("kaikki", "kaikki", "kaikki");
-        firebaseGetDriver.addData();*/
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navlistener =
@@ -102,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
                     switch (menuItem.getItemId()){
                         case R.id.nav_osakilpailut:
-                            selectedFragment = new OsakilpailutFragment();
+                            selectedFragment = new AllCircuitsFragment();
                             break;
                         case R.id.nav_kuljettajat:
-                            selectedFragment = new KuljettajatFragment();
+                            selectedFragment = new UserProfileFragment();
                             break;
                         case R.id.nav_tulokset:
-                            selectedFragment = new TuloksetFragment();
+                            selectedFragment = new ResultsFragment();
                             break;
                         case R.id.nav_add_circuit:
                             selectedFragment = new AddCircuitFragment();
@@ -123,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    // Update UI after login.
     private void updateUI(FirebaseUser user) {
-
         if (user != null) {
             String uid = user.getUid();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new OsakilpailutFragment()).commit();
+                    new AllCircuitsFragment()).commit();
             System.out.println(uid);
             if(uid.equals("ju8VUgiCEAXdtXieoDXDgyjnNnr2") != true){
                 hideItem();
@@ -137,19 +100,16 @@ public class MainActivity extends AppCompatActivity {
             button.setVisibility(View.GONE);
             userName.setVisibility(View.GONE);
             passWord.setVisibility(View.GONE);
-
-            System.out.println("LOGIN");
         } else {
-            /*getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new LoginFragment()).commit();*/
-
-            System.out.println("FAIL");
+            Toast.makeText(this, "Sisäänkirjautuminen epäonnistui!",
+                    Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Login fail");
         }
     }
 
+    // Sign in method.
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
-
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -158,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            System.out.println("Sisäään");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
@@ -171,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         // [END sign_in_with_email]
     }
 
+    // If not admin logged in, hide menu items
     private void hideItem() {
         Menu nav_Menu = bottomnav.getMenu();
         nav_Menu.findItem(R.id.nav_add_circuit).setVisible(false);

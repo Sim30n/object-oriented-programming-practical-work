@@ -2,9 +2,10 @@ package com.example.olio_harjoitusty;
 
 import java.util.Comparator;
 
-public class Sortbyrace implements Comparator<Kilpailija> {
+/*Sort list by the race result.*/
+public class Sortbyrace implements Comparator<Driver> {
 
-    public int compare(Kilpailija a, Kilpailija b){
+    public int compare(Driver a, Driver b){
         return a.positio_kisa - b.positio_kisa;
     }
 

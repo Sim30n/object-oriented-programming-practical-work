@@ -3,7 +3,7 @@ package com.example.olio_harjoitusty;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Kilpailija {
+public class Driver {
     public String osakilpailu;
     public int positio_aika;
     public int positio_kisa;
@@ -13,11 +13,12 @@ public class Kilpailija {
     public ArrayList<Double> kierrosajat_kisa;
     public String pvm;
 
-    public Kilpailija(){
+    public Driver(){
         //Needed for firebase
     }
 
-    public Kilpailija(
+    // Driver constructor, variables in finnsih.
+    public Driver(
                       ArrayList<Double> kierrosajat_aika,
                       ArrayList<Double> kierrosajat_kisa,
                       String nimi,
@@ -54,6 +55,11 @@ public class Kilpailija {
         return pisteet;
     }
 
+    public String getPvm() {
+        return pvm;
+    }
+
+    //  Method for best lap time in qualification.
     public Double getParasKierrosaika(){
         ArrayList<Double> kierrosajat_sorted = kierrosajat_aika;
         Collections.sort(kierrosajat_sorted);
@@ -61,6 +67,7 @@ public class Kilpailija {
         return paras_aika;
     }
 
+    // Method for best lap time in race.
     public Double getBestRacetime(){
         ArrayList<Double> kierrosajat_sorted = kierrosajat_kisa;
         Collections.sort(kierrosajat_sorted);
@@ -68,6 +75,7 @@ public class Kilpailija {
         return paras_aika;
     }
 
+    // Method for all the qualification lap times (not used).
     public ArrayList<Double> getKierrosajat_aika(){
         return kierrosajat_aika;
     }

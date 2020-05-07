@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/* Custom adapter for list view in points view.*/
 public class ResListPtsAdapter extends ArrayAdapter<ResViewPts> {
 
     private static final String TAG = "ResListPtsAdapter";

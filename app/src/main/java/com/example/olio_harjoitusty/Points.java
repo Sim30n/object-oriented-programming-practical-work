@@ -1,13 +1,11 @@
 package com.example.olio_harjoitusty;
 
-import java.util.ArrayList;
-
-public class Pisteet implements Comparable {
+public class Points implements Comparable {
 
     private String name;
     private int total;
 
-    public Pisteet(String name, int total){
+    public Points(String name, int total){
         this.name = name;
         this.total = total;
     }
@@ -20,9 +18,11 @@ public class Pisteet implements Comparable {
         return total;
     }
 
+
+    // Method for ordering Drivers by points.
     @Override
     public int compareTo(Object o) {
-        int comparePoints=((Pisteet)o).getTotal();
+        int comparePoints=((Points)o).getTotal();
         /* For Ascending order*/
         //return this.total-comparePoints;
 

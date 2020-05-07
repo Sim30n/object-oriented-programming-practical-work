@@ -13,10 +13,10 @@ public class Circuit {
     ArrayList<String> kommentit = new ArrayList<String>();
 
     public Circuit(){
-
+        //Needed for firebase
     }
 
-
+    // Constructor with necessary information about the circuit, variables in finnish language.
     public Circuit(boolean ajettu, String info, ArrayList<String> kommentit, String nimi,
                    ArrayList<String> osallistujat, String pvm){
         this.ajettu = ajettu;

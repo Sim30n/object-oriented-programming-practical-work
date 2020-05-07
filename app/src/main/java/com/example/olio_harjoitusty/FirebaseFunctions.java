@@ -1,6 +1,5 @@
 package com.example.olio_harjoitusty;
 
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,30 +17,30 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/*This class is for firestore database*/
+
 @SuppressWarnings("unchecked")
-public class FirebaseGetDriver {
+public class FirebaseFunctions {
 
     FirebaseFirestore mDocRef = FirebaseFirestore.getInstance();
     private static final String TAG = "DocSnippets";
 
     String osakilpailu;
-    String valinta;
     String nimi;
     String circuitID;
 
-    public FirebaseGetDriver(){
+    public FirebaseFunctions(){
         osakilpailu = "";
-        valinta = "";
         nimi = "";
         circuitID = "";
     }
 
+    /* Callbacks interfaces that can be used else where*/
     public interface MyCallback {
-        void onCallback(ArrayList<Kilpailija> kuljettajat);
+        void onCallback(ArrayList<Driver> kuljettajat);
     }
 
     public interface MyCallbackCircuits {
@@ -56,16 +55,13 @@ public class FirebaseGetDriver {
         void onCallback(Circuit circuit);
     }
 
+    /*Setters for getting data from database*/
     public void setCircuitID(String circuitID) {
         this.circuitID = circuitID;
     }
 
     public void setOsakilpailu(String osakilpailu) {
         this.osakilpailu = osakilpailu;
-    }
-
-    public void setValinta(String valinta) {
-        this.valinta = valinta;
     }
 
     public void setNimi(String nimi) {
@@ -79,16 +75,17 @@ public class FirebaseGetDriver {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Kilpailija kilpailija = null;
+                Driver driver = null;
                 if(task.isSuccessful()){
-                    ArrayList<Kilpailija> kuljettajat = new ArrayList<Kilpailija>();
+                    ArrayList<Driver> kuljettajat = new ArrayList<Driver>();
                     for (QueryDocumentSnapshot document : task.getResult()){
-                        kilpailija = document.toObject(Kilpailija.class);
-                        kuljettajat.add(kilpailija);
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        driver = document.toObject(Driver.class);
+                        kuljettajat.add(driver);
                     }
                     myCallback.onCallback(kuljettajat);
                 } else {
-                    System.out.println("Error getting documents: "+ task.getException());
+                    Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
@@ -101,16 +98,17 @@ public class FirebaseGetDriver {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Kilpailija kilpailija = null;
+                        Driver driver = null;
                         if(task.isSuccessful()){
-                            ArrayList<Kilpailija> kuljettajat = new ArrayList<Kilpailija>();
+                            ArrayList<Driver> kuljettajat = new ArrayList<Driver>();
                             for (QueryDocumentSnapshot document : task.getResult()){
-                                kilpailija = document.toObject(Kilpailija.class);
-                                kuljettajat.add(kilpailija);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                driver = document.toObject(Driver.class);
+                                kuljettajat.add(driver);
                             }
                             myCallback.onCallback(kuljettajat);
                         } else {
-                            System.out.println("Error getting documents: "+ task.getException());
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -122,16 +120,17 @@ public class FirebaseGetDriver {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Kilpailija kilpailija = null;
+                        Driver driver = null;
                         if(task.isSuccessful()){
-                            ArrayList<Kilpailija> kuljettajat = new ArrayList<Kilpailija>();
+                            ArrayList<Driver> kuljettajat = new ArrayList<Driver>();
                             for (QueryDocumentSnapshot document : task.getResult()){
-                                kilpailija = document.toObject(Kilpailija.class);
-                                kuljettajat.add(kilpailija);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                driver = document.toObject(Driver.class);
+                                kuljettajat.add(driver);
                             }
                             myCallback.onCallback(kuljettajat);
                         } else {
-                            System.out.println("Error getting documents: "+ task.getException());
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -147,14 +146,14 @@ public class FirebaseGetDriver {
                         if(task.isSuccessful()){
                             ArrayList<Circuit> circuits = new ArrayList<Circuit>();
                             for (QueryDocumentSnapshot document : task.getResult()){
+                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 circuit = document.toObject(Circuit.class);
-                                System.out.println(document.getId()+"#############%%%%%%%%%%%%%%%");
                                 circuit.setI_d(document.getId());
                                 circuits.add(circuit);
                             }
                             myCallbackCircuits.onCallback(circuits);
                         } else {
-                            System.out.println("Error getting documents: "+ task.getException());
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -170,14 +169,14 @@ public class FirebaseGetDriver {
                         Circuit circuit = null;
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()){
-                                System.out.println("##########################"+document.getId());
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 circuit = document.toObject(Circuit.class);
                                 circuit.setI_d(document.getId());
 
                             }
                             myCallbackCircuitByName.onCallback(circuit);
                         } else {
-                            System.out.println("Error getting documents: "+ task.getException());
+                            Log.d(TAG, "get failed with ", task.getException());
                         }
                     }
                 });
@@ -224,49 +223,6 @@ public class FirebaseGetDriver {
 
     public void addData(String nimi, Long pos_a, Long pos_k, Long points, String race,
                         ArrayList<Double> times_a, ArrayList<Double> times_k, String pvm, String docname){
-        /*//*********************************************************
-        ArrayList<Double> kisa = new ArrayList<>();
-        String[] kisa_ajat = {"43.199"};
-        for (int i = 0; i<kisa_ajat.length; i++ ){
-            kisa.add(Double.parseDouble(kisa_ajat[i]));
-        }
-        ArrayList<Double> aika = new ArrayList<>();
-        String[] aika_ajat = {"46.367",
-                "45.679",
-                "45.205",
-                "45.173",
-                "44.714",
-                "45.132",
-                "45.134",
-                "44.166",
-                "44.580",
-                "43.889"};
-        for (int i = 0; i<aika_ajat.length; i++ ){
-            aika.add(Double.parseDouble(aika_ajat[i]));
-        }
-        System.out.println("Kisa: " + kisa);
-        System.out.println("Aika: " + aika);
-        //**************************************************
-        CollectionReference kilpailija = mDocRef.collection("kausi2020");
-        Map<String, Object> data1 = new HashMap<>();
-        data1.put("nimi", "petteri");
-        data1.put("positio_aika", 2);
-        data1.put("positio_kisa", 3);
-        data1.put("pisteet", 15);
-        data1.put("osakilpailu", "vantaa");
-        data1.put("kierrosajat_aika", aika);
-        data1.put("kierrosajat_kisa", kisa);
-        data1.put("pvm", "12.10.2019");
-        kilpailija.document("petteri-vantaa").set(data1);*/
-        System.out.println(nimi);
-        System.out.println(pos_a);
-        System.out.println(pos_k);
-        System.out.println(points);
-        System.out.println(race);
-        System.out.println(times_a);
-        System.out.println(times_k);
-        System.out.println(pvm);
-        System.out.println(docname);
         CollectionReference kilpailija = mDocRef.collection("kausi2020");
         Map<String, Object> data1 = new HashMap<>();
         data1.put("nimi", nimi);
@@ -278,6 +234,8 @@ public class FirebaseGetDriver {
         data1.put("kierrosajat_kisa", times_k);
         data1.put("pvm", pvm);
         kilpailija.document(docname).set(data1);
+        Log.d(TAG, "Document added.");
+
     }
 
     public void addCircuit(boolean isDriven, String info, String name, ArrayList<String> partisipants,
@@ -291,24 +249,94 @@ public class FirebaseGetDriver {
         data1.put("pvm", pvm);
         data1.put("kommentit", kommentit);
         circuit.document(circuitID).set(data1);
+        Log.d(TAG, "Circuit added.");
     }
 
     public void addComment(String circuitId, String comment){
         DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
                 .document(circuitId);
         kommentti.update("kommentit", FieldValue.arrayUnion(comment));
+        Log.d(TAG, "Comment added.");
     }
 
     public void addPartisipant(String circuitId, String partisipant){
         DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
                 .document(circuitId);
         kommentti.update("osallistujat", FieldValue.arrayUnion(partisipant));
+        Log.d(TAG, "Participant added.");
     }
 
     public void deletePartisipant(String circuitID, String osa){
         DocumentReference kommentti = mDocRef.collection("osakilpailut2020")
                 .document(circuitID);
         kommentti.update("osallistujat", FieldValue.arrayRemove(osa));
-
+        Log.d(TAG, "Participant deleted.");
     }
+
+    /*  This is for adding race results to database without UI in dev mode.
+    public void addDataManual(){
+        //*********************************************************
+        ArrayList<Double> kisa = new ArrayList<>();
+        String[] kisa_ajat = {
+                "30.845",
+                "30.614",
+                "29.390",
+                "29.901",
+                "33.368",
+                "29.087",
+                "28.903",
+                "28.681",
+                "29.077",
+                "28.586",
+                "28.632",
+                "28.757",
+                "28.651",
+                "29.203",
+                "30.041",
+                "28.924",
+                "28.697",
+                "28.794",
+                "28.886"};
+        for (int i = 0; i<kisa_ajat.length; i++ ){
+            kisa.add(Double.parseDouble(kisa_ajat[i]));
+        }
+        ArrayList<Double> aika = new ArrayList<>();
+        String[] aika_ajat = {
+                "29.315",
+                "29.724",
+                "29.443",
+                "29.293",
+                "29.170",
+                "31.525",
+                "28.778",
+                "29.108",
+                "29.031",
+                "28.689",
+                "28.508",
+                "28.782",
+                "28.741",
+                "28.925",
+                "29.129",
+                "28.924",
+                "28.589",
+                "29.401"};
+        for (int i = 0; i<aika_ajat.length; i++ ){
+            aika.add(Double.parseDouble(aika_ajat[i]));
+        }
+        //System.out.println("Kisa: " + kisa);
+        //System.out.println("Aika: " + aika);
+        //**************************************************
+        CollectionReference kilpailija = mDocRef.collection("kausi2020");
+        Map<String, Object> data1 = new HashMap<>();
+        data1.put("nimi", "juha");
+        data1.put("positio_aika", 8);
+        data1.put("positio_kisa", 8);
+        data1.put("pisteet", 4);
+        data1.put("osakilpailu", "lahti");
+        data1.put("kierrosajat_aika", aika);
+        data1.put("kierrosajat_kisa", kisa);
+        data1.put("pvm", "28.12.2019");
+        kilpailija.document("juha-lahti").set(data1);
+    }
+     */
 }

@@ -6,16 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,9 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-import java.util.ArrayList;
 
-public class KuljettajatFragment extends Fragment {
+public class UserProfileFragment extends Fragment {
     EditText usrName;
     EditText usrEmail;
     EditText psw1;
@@ -33,8 +27,7 @@ public class KuljettajatFragment extends Fragment {
     Button updateInfo;
     Button logout;
 
-    private static final String TAG = "Kuljettaja profiili";
-
+    private static final String TAG = "Driver profile";
 
     @Nullable
     @Override
@@ -54,6 +47,7 @@ public class KuljettajatFragment extends Fragment {
             usrName.setText(name);
             usrEmail.setText(email);
         }
+        // Update userinfo.
         updateInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +66,7 @@ public class KuljettajatFragment extends Fragment {
                         });
                 String password1 = psw1.getText().toString();
                 String password2 = psw1.getText().toString();
+                // Check if the passwords are equal.
                 if(password1.equals("")!=true && password2.equals("")!=true && password1.equals(password2)){
                     user.updatePassword(password1)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -86,6 +81,7 @@ public class KuljettajatFragment extends Fragment {
             }
         });
 
+        //Logout with firestore.
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

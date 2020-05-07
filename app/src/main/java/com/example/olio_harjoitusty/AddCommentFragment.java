@@ -14,21 +14,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddComment extends Fragment {
+public class AddCommentFragment extends Fragment {
 
     String circuitID;
     EditText comment;
     EditText nick;
     Button submit;
-    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
+    FirebaseFunctions firebaseFunctions = new FirebaseFunctions();
 
-    public AddComment(String circuitID) {
+    public AddCommentFragment(String circuitID) {
         this.circuitID = circuitID;
     }
 
@@ -39,6 +36,7 @@ public class AddComment extends Fragment {
         comment = v.findViewById(R.id.edit_comment);
         nick = v.findViewById(R.id.edit_comment_name);
         submit = v.findViewById(R.id.submit_comment);
+        // Button will add comment to given circuit, can be anonymous.
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +46,10 @@ public class AddComment extends Fragment {
                 String com = comment.getText().toString();
                 String nic = nick.getText().toString();
                 String toDatabase = com + " -" + nic + ", " + strDate;
-                firebaseGetDriver.addComment(circuitID, toDatabase);
+                firebaseFunctions.addComment(circuitID, toDatabase); // add comment to database
                 Fragment newFrag = new CircuitInfoFragment(circuitID);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
+                transaction.replace(R.id.fragment_container, newFrag );
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
             }

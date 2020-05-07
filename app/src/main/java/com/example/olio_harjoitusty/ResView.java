@@ -1,9 +1,12 @@
 package com.example.olio_harjoitusty;
 
+
 public class ResView {
     private String nimi;
     private String aika;
     private String pts;
+
+    /*Class for the result list view*/
 
     public ResView(String nimi, String aika, String pts) {
         this.nimi = nimi;

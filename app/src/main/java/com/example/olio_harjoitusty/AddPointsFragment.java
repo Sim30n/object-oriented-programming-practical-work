@@ -6,17 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import java.util.ArrayList;
 
-public class AddPointsFragment extends Fragment {
 
+public class AddPointsFragment extends Fragment {
     EditText name;
     EditText pos_time;
     EditText pos_race;
@@ -27,6 +23,7 @@ public class AddPointsFragment extends Fragment {
     EditText pvm;
     Button button;
 
+    // This will add race result to database.
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,22 +36,21 @@ public class AddPointsFragment extends Fragment {
         laptimesA = (EditText) v.findViewById(R.id.lap_times_a);
         laptimesR = (EditText) v.findViewById(R.id.lap_times_k);
         pvm = (EditText) v.findViewById(R.id.pvm);
-        final FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
+        final FirebaseFunctions firebaseFunctions = new FirebaseFunctions();
         button = v.findViewById(R.id.addPoints);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                 String driverName = name.getText().toString();
                 Long position_time = Long.parseLong(pos_time.getText().toString());
                 Long position_race = Long.parseLong(pos_race.getText().toString());
                 Long race_points = Long.parseLong(points.getText().toString());
                 String race_name = race.getText().toString();
                 String lapA = laptimesA.getText().toString();
-                String[] lapA_array = lapA.split(" ");
+                String[] lapA_array = lapA.split(" "); //split given laptimes to strings
                 ArrayList<Double> timesA = new ArrayList<Double>();
                 for(String i : lapA_array){
-                    Double time = Double.parseDouble(i);
+                    Double time = Double.parseDouble(i); // parse to double for the database
                     timesA.add(time);
                 }
                 String lapR = laptimesR.getText().toString();
@@ -66,7 +62,8 @@ public class AddPointsFragment extends Fragment {
                 }
                 String race_date = pvm.getText().toString();
                 String docname = driverName + "-" + race_name;
-                firebaseGetDriver.addData(driverName, position_time, position_race, race_points,
+                // Add to firestore.
+                firebaseFunctions.addData(driverName, position_time, position_race, race_points,
                         race_name, timesA, timesR, race_date, docname);
             }
         });

@@ -12,9 +12,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="6dp"
-        android:text="IMATRA"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="25dp"/>
+
+    <TextView
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:id="@+id/result_pvm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
 
     <ListView
         android:id="@+id/lista"

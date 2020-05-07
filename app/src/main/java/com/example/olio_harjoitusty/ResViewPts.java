@@ -4,6 +4,8 @@ public class ResViewPts {
     private String nimi;
     private String pts;
 
+    /*Class for the points list view*/
+
     public ResViewPts(String nimi, String pts) {
         this.nimi = nimi;
         this.pts = pts;

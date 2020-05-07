@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/* Custom adapter for list view in circuit results.*/
 public class ResListAdapter extends ArrayAdapter<ResView> {
 
     private static final String TAG = "ResListAdapter";

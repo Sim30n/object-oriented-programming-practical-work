@@ -6,27 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.util.ArrayList;
 
-
-public class OsakilpailutFragment extends Fragment {
+public class AllCircuitsFragment extends Fragment {
 
     ListView circuitList;
     ArrayAdapter<String> circuitAdapter;
     ArrayList<String> viewArr = new ArrayList<String>();
-    FirebaseGetDriver firebaseGetDriver = new FirebaseGetDriver();
+    FirebaseFunctions firebaseFunctions = new FirebaseFunctions();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_osakilpailut, container, false);
+
+        // Clear lists to avoid crashes.
+        viewArr.clear();
+
         circuitList = (ListView) v.findViewById(R.id.circuits_list);
         circuitAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, viewArr);
         circuitList.setAdapter(circuitAdapter);
@@ -34,47 +35,20 @@ public class OsakilpailutFragment extends Fragment {
         circuitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                //isDriven(viewArr.get(position));
-                firebaseGetDriver.getAllCircuits(new FirebaseGetDriver.MyCallbackCircuits() {
+                firebaseFunctions.getAllCircuits(new FirebaseFunctions.MyCallbackCircuits() {
                     @Override
                     public void onCallback(ArrayList<Circuit> circuits) {
-                        isDriven(circuits.get(position).getName());
+                        isDriven(circuits.get(position).getI_d());
                     }
                 });
             }
         });
-
-
-
-        /*button = v.findViewById(R.id.eka);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment tulos = new KilpailuTulosFragment("imatra", "aika-ajot");
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-            }
-        });
-
-        button2 = v.findViewById(R.id.toka);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment tulos = new KilpailuTulosFragment("vantaa", "aika-ajot");
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, tulos ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-            }
-        });*/
-
         return v;
     }
 
+    // Add circuits to listview.
     public void addCircuits(){
-        firebaseGetDriver.getAllCircuits(new FirebaseGetDriver.MyCallbackCircuits() {
+        firebaseFunctions.getAllCircuits(new FirebaseFunctions.MyCallbackCircuits() {
             @Override
             public void onCallback(ArrayList<Circuit> circuits) {
                 for(int i = 0; i<circuits.size(); i++){
@@ -87,30 +61,30 @@ public class OsakilpailutFragment extends Fragment {
         });
     }
 
-    public void isDriven(final String os){
-        firebaseGetDriver.getAllCircuits(new FirebaseGetDriver.MyCallbackCircuits() {
+    // Will check if the circuit is driven or not
+    public void isDriven(final String osID){
+        firebaseFunctions.getAllCircuits(new FirebaseFunctions.MyCallbackCircuits() {
             @Override
             public void onCallback(ArrayList<Circuit> circuits) {
                 for(int i = 0; i<circuits.size(); i++){
-                    if(os.equals(circuits.get(i).getName())){
+                    if(osID.equals(circuits.get(i).getI_d())){
+                        // If driven will start result fragment.
                         if(circuits.get(i).isAjettu()){
-                            Fragment newFrag = new KilpailuTulosFragment(circuits.get(i).getName(), "aika-ajot");
+                            Fragment newFrag = new CircuitResultFragment(circuits.get(i).getName());
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
                             transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                             transaction.commit();
-                        } else {
+                        } else { // If not driven, will start circuit info fragment.
                             Fragment newFrag = new CircuitInfoFragment(circuits.get(i).getI_d());
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_container, newFrag ); // give your fragment container id in first parameter
                             transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                             transaction.commit();
                         }
-                        System.out.println(circuits.get(i).isAjettu());
                     }
                 }
             }
         });
-
     }
 }

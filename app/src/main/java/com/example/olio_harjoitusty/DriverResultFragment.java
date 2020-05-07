@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,59 +12,49 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import java.security.KeyStore;
 import java.util.ArrayList;
-import java.util.Map;
 
-public class DriverProfileFragment extends Fragment {
+public class DriverResultFragment extends Fragment {
     private String nimi;
 
-    public DriverProfileFragment(String nimi){
+    public DriverResultFragment(String nimi){
         this.nimi = nimi;
     }
 
-    ListView list;
     TextView kisa;
     TextView sija_aika;
     TextView nimiText;
-    ArrayList<String> jarjestys = new ArrayList<String>();
-    ArrayList<String> kierrosaika = new ArrayList<String>();
-    ArrayAdapter<String> jarjestysAdapter;
-    FirebaseGetDriver firebaseGetDriver;
+    FirebaseFunctions firebaseFunctions;
 
     LineChart mChart;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        firebaseGetDriver = new FirebaseGetDriver();
-        firebaseGetDriver.setNimi(nimi);
+        firebaseFunctions = new FirebaseFunctions();
+        firebaseFunctions.setNimi(nimi);
         View v = inflater.inflate(R.layout.fragment_driverprofile, container, false);
         kisa = (TextView) v.findViewById(R.id.kisa);
         sija_aika = (TextView) v.findViewById(R.id.aika_sija);
         nimiText = (TextView) v.findViewById(R.id.name);
         mChart = (LineChart) v.findViewById(R.id.line_chart);
-
-
-
-        //mChart.setOnChartGestureListener((OnChartGestureListener) this.getActivity());
-        // mChart.setOnChartValueSelectedListener((OnChartValueSelectedListener) getActivity());
         addPositiotRace();
         addChartData();
         return v;
     }
 
+    // Add best position in qualification and race to the view.
     public void addPositiotRace(){
-        firebaseGetDriver.getDriversByName(new FirebaseGetDriver.MyCallback() {
+        firebaseFunctions.getDriversByName(new FirebaseFunctions.MyCallback() {
             @Override
-            public void onCallback(ArrayList<Kilpailija> kuljettajat) {
+            public void onCallback(ArrayList<Driver> kuljettajat) {
                 Integer positio_kisa = 100;
                 Integer positio_aika = 100;
                 String race = "";
@@ -94,31 +82,44 @@ public class DriverProfileFragment extends Fragment {
         });
     }
 
+    // Chart for showing position in races.
     public void addChartData(){
-
-        firebaseGetDriver.getDriversByName(new FirebaseGetDriver.MyCallback() {
+        firebaseFunctions.getDriversByName(new FirebaseFunctions.MyCallback() {
             @Override
-            public void onCallback(ArrayList<Kilpailija> kuljettajat) {
+            public void onCallback(ArrayList<Driver> kuljettajat) {
                 ArrayList<Entry> yValues;
                 mChart.setDragEnabled(true);
                 mChart.setScaleEnabled(false);
                 mChart.getAxisRight().setEnabled(false);
+                mChart.getAxisLeft().setEnabled(false);
                 mChart.getAxisLeft().setAxisMinimum(0f);
                 mChart.getAxisLeft().setInverted(true);
-                //mChart.getAxisLeft().setGranularity(1f);
                 Description description = mChart.getDescription();
                 description.setEnabled(true);
-                // set the description text
                 description.setText("Kilpailijan sijoitus osakailpailussa");
                 yValues = new ArrayList<Entry>();
+                final ArrayList<String> xLabel = new ArrayList<>();
+                System.out.println(kuljettajat.size());
                 for(int i = 0; i<kuljettajat.size(); i++){
                     yValues.add(new Entry(i, kuljettajat.get(i).getPositio_kisa()));
+                    xLabel.add(kuljettajat.get(i).getOsakilpailu());
                 }
                 LineDataSet set1 = new LineDataSet(yValues, "Sijoitus");
                 set1.setFillAlpha(110);
                 ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                 dataSets.add(set1);
                 LineData data = new LineData(dataSets);
+                XAxis xAxis = mChart.getXAxis();
+                xAxis.setDrawGridLines(false);
+                if(kuljettajat.size()>1){
+                    xAxis.setLabelCount(1);
+                }
+                xAxis.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return xLabel.get((int)value);
+                    }
+                });
                 mChart.setData(data);
                 mChart.invalidate();
             }
