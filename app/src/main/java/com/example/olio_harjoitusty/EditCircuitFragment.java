@@ -73,7 +73,6 @@ public class EditCircuitFragment extends Fragment {
             @Override
             public void onCallback(Circuit circuit) {
                 if(circuit != null){
-                    System.out.println(circuit.getName());
                     edNimi.setText(circuit.getName());
                     edPvm.setText(circuit.getPvm());
                     edInfo.setText(circuit.getInfo());

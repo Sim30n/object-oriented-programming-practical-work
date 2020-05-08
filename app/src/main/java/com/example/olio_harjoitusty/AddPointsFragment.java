@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -65,9 +67,16 @@ public class AddPointsFragment extends Fragment {
                 // Add to firestore.
                 firebaseFunctions.addData(driverName, position_time, position_race, race_points,
                         race_name, timesA, timesR, race_date, docname);
+                showToast();
             }
         });
         return v;
     }
+
+    public void showToast(){
+        Toast.makeText(this.getActivity(), "Tulokset lisätty tietokantaan!",
+                Toast.LENGTH_LONG).show();
+    }
+
 
 }

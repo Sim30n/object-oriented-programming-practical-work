@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     Button button;
-    Button newUser;
     BottomNavigationView bottomnav;
     EditText userName;
     EditText passWord;
@@ -86,13 +85,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
+    public void showToast(){
+        Toast.makeText(this, "Sisäänkirjautuminen epäonnistui!",
+                Toast.LENGTH_LONG).show();
+    }
+
     // Update UI after login.
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             String uid = user.getUid();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new AllCircuitsFragment()).commit();
-            System.out.println(uid);
             if(uid.equals("ju8VUgiCEAXdtXieoDXDgyjnNnr2") != true){
                 hideItem();
             }
@@ -101,33 +104,36 @@ public class MainActivity extends AppCompatActivity {
             userName.setVisibility(View.GONE);
             passWord.setVisibility(View.GONE);
         } else {
-            Toast.makeText(this, "Sisäänkirjautuminen epäonnistui!",
-                    Toast.LENGTH_LONG).show();
             Log.d(TAG, "Login fail");
         }
     }
 
     // Sign in method.
     private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            updateUI(null);
+        if(email.equals("")!= true || password.equals("") != true) {
+            Log.d(TAG, "signIn:" + email);
+            // [START sign_in_with_email]
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                showToast();
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                updateUI(null);
+                            }
                         }
-                    }
-                });
-        // [END sign_in_with_email]
+                    });
+            // [END sign_in_with_email]
+        } else{
+            showToast();
+        }
     }
 
     // If not admin logged in, hide menu items

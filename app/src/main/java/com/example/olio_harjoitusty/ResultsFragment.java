@@ -82,7 +82,6 @@ public class ResultsFragment extends Fragment {
                         }
                     }
                     pointsArr.add(new Points(drivers.get(i), points_total));
-                    System.out.println(drivers.get(i)+ ": "+points_total);
                     points_total = 0;
                 }
                 Collections.sort(pointsArr);
