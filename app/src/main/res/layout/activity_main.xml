@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:text="user@user.com" />
+            android:text="käyttäjänimi" />
 
         <EditText
             android:id="@+id/password"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="12goija032pjäreghjk034" />
+            android:text="salasana" />
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
