@@ -1,4 +1,4 @@
-# object-oriented-programming-week-harjoitustyö
+# Karting tulos sovellus, olio-ohjelmointi kurssin harjoitustyö.
 
 Osakilpailut näkyvät tällä sivullla:
 
