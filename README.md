@@ -1,9 +1,11 @@
 # object-oriented-programming-week-harjoitustyö
 
 Osakilpailut näkyvät tällä sivullla.
+
 ![osakilpailut](https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700185/Karting-app-github/1.jpg)
 
 Osakilpailua voi kommentoida ja ilmoittautua osallistujaksi tällä sivulla. 
+
 ![osakilpailu](https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700186/Karting-app-github/2.jpg)
 
 ![tulokset](https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700185/Karting-app-github/4.jpg)
