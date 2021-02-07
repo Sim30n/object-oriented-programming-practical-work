@@ -2,7 +2,7 @@
 <img align="left" src="https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700185/Karting-app-github/1.jpg">
 Osakilpailut näkyvät tällä sivulla.
 
-<img align="left" src="https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700185/Karting-app-github/1.jpg">
+<img align="left" src="https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700186/Karting-app-github/2.jpg">
 Tulevaa osakilpailua voi kommentoida ja ilmoittautua osallistujaksi tältä sivulta.
 
 ![osakilpailu](https://res.cloudinary.com/kuvapankki/image/upload/c_scale,w_270/v1612700186/Karting-app-github/2.jpg)
