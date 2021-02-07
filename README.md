@@ -1,4 +1,4 @@
-# Karting tulos sovellus, olio-ohjelmointi kurssin harjoitustyö.
+# Karting klubin tulos sovellus, olio-ohjelmointi kurssin harjoitustyö.
 
 Osakilpailut näkyvät tällä sivullla:
 
